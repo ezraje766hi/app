@@ -1,0 +1,5 @@
+protocol=https
+host=https://github.com/ezraje766hi/app.git
+Username for 'https://https://github.com/ezraje766hi/app.git': ezraje766hi
+Password for 'https://https://github.com/ezraje766hi/app.git':S1lalah@123
+protocol=https
