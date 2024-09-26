@@ -1,0 +1,27 @@
+    id  nik     nama                                nik_atasan  nama_atasan       directorate                              created_at           updated_at           created_by  updated_by  egroup  
+------  ------  ----------------------------------  ----------  ----------------  ---------------------------------------  -------------------  -------------------  ----------  ----------  --------
+    60  93123   Joshua Rydley                       83391       Ivan Yuditia      Network Directorate                      2024-06-03 17:22:25  2024-06-03 17:22:24  95182       95182               
+    59  93123   Joshua Rydley                       83391       Ivan Yuditia      Finance and Risk Management Directorate  2024-06-03 17:21:43  2024-06-03 17:21:42  95182       95182               
+    58  200103  Muhammad Fitra Azriel               83391       Ivan Yuditia      Network Directorate                      2024-05-08 09:57:50  2024-05-08 09:57:46  95182       95182               
+    57  200103  Muhammad Fitra Azriel               83391       Ivan Yuditia      Finance Directorate                      2024-05-08 09:57:38  2024-05-08 09:57:35  95182       95182               
+    54  200119  Viqri Al Fattah                     76217       Aria Kadarusna    Human Capital Management Directorate     2024-01-04 16:10:08  2024-01-04 16:10:03  95182       95182               
+    53  200119  Viqri Al Fattah                     76217       Aria Kadarusna    CEO's Office Directorate                 2024-01-04 16:09:39  2024-01-04 16:09:34  95182       95182               
+    52  200043  Axel Gilbert Logan                  87035       Rony Kristianto   Information Technology Directorate       2024-01-09 10:29:28  2024-01-04 15:35:57  95182       95182               
+    51  200043  Axel Gilbert Logan                  87035       Rony Kristianto   Planning and Transformation Directorate  2024-01-09 10:29:28  2024-01-04 15:34:55  95182       95182               
+    48  200018  Muhammad Rafif Rajendra W           87035       Rony Kristianto   Information Technology Directorate       2024-01-09 10:29:28  2023-11-06 14:33:38  95182       95182               
+    47  200018  Muhammad Rafif Rajendra W           87035       Rony Kristianto   Planning and Transformation Directorate  2024-01-09 10:29:28  2023-11-02 13:08:05  95182       95182               
+    44  89103   Octavianus Ruben Redite Cakti       72308       Ilham             Sales Directorate                        2022-10-10 11:56:20  2022-10-10 11:56:19  93246       93246               
+    43  92038   Tara Aisya Ramadhiani               73030       Winny Widiastuti  Marketing Directorate                    2023-10-04 13:01:30  2023-10-04 13:01:27  93246       77234               
+    42  90002   Restu Wahyu Anggita                 83391       Ivan Yuditia      Network Directorate                      2024-08-02 19:16:37  2024-08-02 19:16:30  93246       95182               
+    41  88111   Agung Adityo                        73030       Winny Widiastuti  Marketing Directorate                    2022-05-12 16:18:18  2022-05-12 16:18:17  93246       93246               
+    39  80268   Herwindo Arinto Nugraha             73030       Winny Widiastuti  Marketing Directorate                    2022-05-12 16:17:42  2022-05-12 16:17:40  93246       93246               
+    34  70009   Winni Vitriani                      83391       Ivan Yuditia      Finance and Risk Management Directorate  2024-08-02 19:14:04  2024-08-02 19:13:57  93246       95182               
+    33  98017   Rahma Salsabila Sekar Cahyaningrum  76217       Aria Kadarusna    Human Capital Management Directorate     2022-04-04 11:54:15  2022-04-04 11:54:14  93246       93246               
+    32  98017   Rahma Salsabila Sekar Cahyaningrum  76217       Aria Kadarusna    CEO's Office Directorate                 2022-04-23 11:37:07  2022-04-23 11:37:00  93246       93246               
+    23  99012   Muhammad Al Bahri                   73030       Winny Widiastuti  Marketing Directorate                    2022-12-29 14:55:57  2022-12-29 14:55:52  93246       97042               
+    18  78225   Shirley Natassa De Pauw             76217       Aria Kadarusna    Human Capital Management Directorate     2022-04-04 11:54:03  2022-04-04 11:54:03  93246       93246               
+    16  78225   Shirley Natassa De Pauw             76217       Aria Kadarusna    CEO's Office Directorate                 2022-04-23 11:37:01  2022-04-23 11:36:54  93246       93246               
+    12  76025   Farischa Indri Kumala               72308       Ilham             Sales Directorate                        2022-04-04 11:50:16  2022-04-04 11:50:16  93246       93246               
+    11  93248   Muhammad Haidar Ramdani             72308       Ilham             Sales Directorate                        2022-04-04 11:50:00  2022-04-04 11:49:59  93246       93246               
+    10  74045   Yenyen Yanara                       87035       Rony Kristianto   Information Technology Directorate       2024-01-09 10:29:28  2022-04-22 15:00:29  93246       93246               
+     4  71032   A'an Nawang Wulan                   87035       Rony Kristianto   Planning and Transformation Directorate  2024-01-09 10:29:28  2024-01-09 10:22:00  93246       95182               
