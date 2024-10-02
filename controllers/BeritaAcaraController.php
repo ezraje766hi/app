@@ -2894,6 +2894,7 @@ class BeritaAcaraController extends Controller
         }
         
         //var_dump($data_ba->tipe,$data_ba->code_template,$databp[0],$data_ba->old_area,$data_ba->new_area,$data_ba->old_directorate);exit;
+        /** ejes 011024 ada merubah di model.php terkait template master*/
         $data_esk_master = Model::checkTemplateMaster($data_ba->tipe,$data_ba->code_template,$databp[0],$data_ba->old_area,$data_ba->new_area,$data_ba->old_directorate);
         //var_dump($data_esk_master);exit;
         if(!empty($data_esk_master)){
