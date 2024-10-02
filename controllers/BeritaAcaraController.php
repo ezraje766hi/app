@@ -113,11 +113,11 @@ class BeritaAcaraController extends Controller
         $searchModel = new BeritaAcaraSearch();
         $searchModel2 = new EskBeritaAcaraOther();
 
-		$area = Yii::$app->user->identity->employee->area;
-		if($area != 'HEAD OFFICE')
+        $area = Yii::$app->user->identity->employee->area;
+        if($area != 'HEAD OFFICE')
             $searchModel->area = Yii::$app->user->identity->employee->area;
             $searchModel2->area = Yii::$app->user->identity->employee->area;
-		
+        
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider2 = $searchModel2->search(Yii::$app->request->queryParams);
 
@@ -142,65 +142,65 @@ class BeritaAcaraController extends Controller
         }
         
         $dataProvider = $searchModel->beritaAcaraDetailApproval(Yii::$app->request->queryParams,$query);
-		$dataProvider->setPagination(['pageSize' => 100]);
-		//$dataProvider->pagination->pageSize = 1;
-		
+        $dataProvider->setPagination(['pageSize' => 100]);
+        //$dataProvider->pagination->pageSize = 1;
+        
         return $this->render('approval_ba', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel
         ]);
     }
-	
-	public function actionApprovalManagerBa()
+    
+    public function actionApprovalManagerBa()
     {
         set_time_limit(0);
         ini_set('memory_limit', '2048M');
         
         $searchModel = new EskBeritaAcaraDetailOther();
-		/*
+        /*
         if(Yii::$app->user->can('sysadmin')){
             $query = "esk_berita_acara_other.status = 1 AND esk_berita_acara_detail_other.flag_esk = 0 AND esk_berita_acara_detail_other.flag_ba_manager = 1";
         }else{
              $query = "esk_berita_acara_other.status = 1 && esk_berita_acara_detail_other.nik_approved_ba = '".Yii::$app->user->identity->nik."' AND esk_berita_acara_detail_other.flag_esk = 0 AND esk_berita_acara_detail_other.flag_ba_manager = 1";
         }
-		*/
-		
-		$query = "esk_berita_acara_other.status = 1 && esk_berita_acara_detail_other.nik_approved_ba = '".Yii::$app->user->identity->nik."' AND esk_berita_acara_detail_other.flag_esk = 0 AND esk_berita_acara_detail_other.flag_ba_manager = 1";
+        */
+        
+        $query = "esk_berita_acara_other.status = 1 && esk_berita_acara_detail_other.nik_approved_ba = '".Yii::$app->user->identity->nik."' AND esk_berita_acara_detail_other.flag_esk = 0 AND esk_berita_acara_detail_other.flag_ba_manager = 1";
 
         $dataProvider = $searchModel->beritaAcaraDetailApproval(Yii::$app->request->queryParams,$query);
-		$dataProvider->setPagination(['pageSize' => 100]);
-		//$dataProvider->pagination->pageSize = 1;
-		
+        $dataProvider->setPagination(['pageSize' => 100]);
+        //$dataProvider->pagination->pageSize = 1;
+        
         return $this->render('approval_manager_ba', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel
         ]);
     }
-	
-	public function actionModalverification(){
+    
+    public function actionModalverification(){
         $id = yii::$app->request->get('id');
 
         return $this->renderAjax('app_dialog_verification',[
             "id" => $id
         ]);
     }
-	
-	public function actionVerifikasiBa()
+    
+    public function actionVerifikasiBa()
     {
         set_time_limit(0);
         ini_set('memory_limit', '2048M');
         
         $searchModel = new EskBeritaAcaraDetailOther();
-		/*
-		if(Yii::$app->user->can('sysadmin')){
-			$query = "esk_berita_acara_other.status = 2 AND esk_berita_acara_detail_other.flag_esk = 0";
+        /*
+        if(Yii::$app->user->can('sysadmin')){
+            $query = "esk_berita_acara_other.status = 2 AND esk_berita_acara_detail_other.flag_esk = 0";
         } else {
-		*/
-			$query = "esk_berita_acara_other.status = 1 && esk_berita_acara_other.created_by = '".Yii::$app->user->identity->employee->person_id."' AND esk_berita_acara_detail_other.flag_esk = 4";
+        */
+            $query = "esk_berita_acara_other.status = 1 && esk_berita_acara_other.created_by = '".Yii::$app->user->identity->employee->person_id."' AND esk_berita_acara_detail_other.flag_esk = 4";
         //}
-		$dataProvider = $searchModel->beritaAcaraDetailApproval(Yii::$app->request->queryParams,$query);
-		$dataProvider->pagination = ['pageSize' => 50];
-		
+        $dataProvider = $searchModel->beritaAcaraDetailApproval(Yii::$app->request->queryParams,$query);
+        $dataProvider->pagination = ['pageSize' => 50];
+        
         return $this->render('verifikasi_ba', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel
@@ -538,13 +538,13 @@ class BeritaAcaraController extends Controller
             }
         }
     }
-	
-	public function actionListApprovalBa()
+    
+    public function actionListApprovalBa()
     {
         set_time_limit(0);
         ini_set('memory_limit', '2048M');
         
-		
+        
         $searchModel = new EskBeritaAcaraDetailOther();
         if(Yii::$app->user->can('sysadmin')){
             $query = "esk_berita_acara_other.status = 1 AND esk_berita_acara_detail_other.flag_esk = 0";
@@ -559,7 +559,7 @@ class BeritaAcaraController extends Controller
             'searchModel' => $searchModel
         ]);
     }
-	
+    
     public function actionModalapproved(){
         $id = yii::$app->request->get('id');
 
@@ -567,16 +567,16 @@ class BeritaAcaraController extends Controller
             "id" => $id
         ]);
     }
-	
-	public function actionModalmanagerapproved(){
+    
+    public function actionModalmanagerapproved(){
         $id = yii::$app->request->get('id');
 
         return $this->renderAjax('app_manager_dialog',[
             "id" => $id
         ]);
     }
-	
-	public function actionVerificationall(){
+    
+    public function actionVerificationall(){
         $id_app_data = yii::$app->request->get('id_approval');
         $transaction = Yii::$app->db->beginTransaction();
         try {
@@ -600,16 +600,16 @@ class BeritaAcaraController extends Controller
             Yii::$app->session->setFlash('error', 'Failed verification Data ' . $countAll . ' data');
         }
 
-		return $this->redirect(['berita-acara/verifikasi-ba']);
+        return $this->redirect(['berita-acara/verifikasi-ba']);
          
     }
-	
+    
     //remark and added by ejes 12092024 for esk tipe mpp dan sakit berkepanjangan
-	//public function getHeadApprovalBa($band, $nik){  
+    //public function getHeadApprovalBa($band, $nik){  
     public function getHeadApprovalBa($band, $nik, $tipeesk){  
-		
-		$employee = Employee::findOne(['nik' => $nik]);
-		//added esk tipe 12092024
+        
+        $employee = Employee::findOne(['nik' => $nik]);
+        //added esk tipe 12092024
         if( strpos(strtolower($tipeesk), "sakit berkepanjangan") !== FALSE || strpos(strtolower($tipeesk), "mpp") !== FALSE){
             if($employee->band == 5) {
                 $data = 'esk';
@@ -633,8 +633,8 @@ class BeritaAcaraController extends Controller
 
         return $data;
     }
-	
-	public function actionApprovedmanagerall(){
+    
+    public function actionApprovedmanagerall(){
         $id_app_data = yii::$app->request->get('id_approval');
         $id_app = explode(",",$id_app_data);
         
@@ -758,24 +758,24 @@ class BeritaAcaraController extends Controller
                                     ) { 
                                         // PJS
                                         $data_a = new EskApprovalLists();
-                                        $data_a->id_esk 		= $esk_lists->id;
-                                        $data_a->approval_nik 	= '7310004';
-                                        $data_a->approval_name 	= 'Indrawan Ditapradana';
-                                        $data_a->approval_mail 	= 'indrawan_ditapradana@telkomsel.co.id';
+                                        $data_a->id_esk         = $esk_lists->id;
+                                        $data_a->approval_nik   = '7310004';
+                                        $data_a->approval_name  = 'Indrawan Ditapradana';
+                                        $data_a->approval_mail  = 'indrawan_ditapradana@telkomsel.co.id';
                                         $data_a->approval_title = 'Director Human Capital Management';
-                                        $data_a->sequence 		= 1;
+                                        $data_a->sequence       = 1;
                                         $data_a->save();
                                 
                                 // perubahan approval mpp dan sakit berkepanjangan - 12092024 -ejes
                                     // >> } elseif($esk_lists->level_band >= 5 && (strpos(strtolower($esk_lists->tipe), "pejabat sementara") !== false || strpos(strtolower($esk_lists->tipe), "mutasi aps") !== false || strpos(strtolower($esk_lists->tipe), "sakit berkepanjangan") !== false || strpos(strtolower($esk_lists->tipe), "mpp") !== false && $model->level_band >= 5)) {
                                 } elseif($esk_lists->level_band >= 5 && (strpos(strtolower($esk_lists->tipe), "pejabat sementara") !== false || strpos(strtolower($esk_lists->tipe), "mutasi aps") !== false  )) {
                                         $data_a = new EskApprovalLists();
-                                        $data_a->id_esk 		= $esk_lists->id;
-                                        $data_a->approval_nik 	= '7610001';
-                                        $data_a->approval_name 	= 'Nugroho';
-                                        $data_a->approval_mail 	= 'nugroho@telkomsel.co.id';
+                                        $data_a->id_esk         = $esk_lists->id;
+                                        $data_a->approval_nik   = '7610001';
+                                        $data_a->approval_name  = 'Nugroho';
+                                        $data_a->approval_mail  = 'nugroho@telkomsel.co.id';
                                         $data_a->approval_title = 'President Director';
-                                        $data_a->sequence 		= 1;
+                                        $data_a->sequence       = 1;
                                         $data_a->save();
                                 } else {
                                     foreach($data_approval as $approval){
@@ -859,8 +859,8 @@ class BeritaAcaraController extends Controller
         }else{
             return $this->redirect(['approval-manager-ba', 'data_error' => $data_error]);
         }
-	}
-	
+    }
+    
     public function actionApprovedall(){
         $id_app_data = yii::$app->request->get('id_approval');
         $id_app = explode(",",$id_app_data);
@@ -892,11 +892,11 @@ class BeritaAcaraController extends Controller
                 $esk_lists->dpe_length = $data_ba_new->dpe_length;
                 $esk_lists->dpe_unit = $data_ba_new->dpe_unit;
                 $esk_lists->grade = $data_ba_new->grade;
-                	// sprint 3
+                    // sprint 3
                 $esk_lists->new_nik = $data_ba_new->new_nik;
                 $esk_lists->notif_stat_date = $data_ba_new->notif_stat_date;
                 $esk_lists->leaving_reason = $data_ba_new->leaving_reason;
-                    	// end
+                        // end
                 // end
 
                 //get data band position 
@@ -905,14 +905,14 @@ class BeritaAcaraController extends Controller
                 //get id esk master
                 $esk_template_master = EskTemplateMaster::findOne($esk_lists_temp->id_template_master);
                 //$id_approval = EskApprovalMaster::find()->where(['band' => $databp[0], 'authority_area' => $esk_lists_temp->authority])->andWhere('directorate like "%'.$esk_lists_temp->old_directorate.'%"')->one();
-				if(is_null($databp[0]) == true || $databp[0] == "" || $databp[0] == 0 || empty($databp[0]) && ($esk_lists_temp->level_band != "" || $esk_lists_temp->level_band !=0)) {
-					$id_approval = EskApprovalMaster::find()->where(['band' => $esk_lists_temp->level_band])->andWhere('authority_area like "%'.$esk_lists_temp->authority.'%"')->andWhere('directorate like "%'.$esk_lists_temp->old_directorate.'%"')->one();
-				} else {
-					$id_approval = EskApprovalMaster::find()->where(['band' => $databp[0]])->andWhere('authority_area like "%'.$esk_lists_temp->authority.'%"')->andWhere('directorate like "%'.$esk_lists_temp->old_directorate.'%"')->one();
-				}
+                if(is_null($databp[0]) == true || $databp[0] == "" || $databp[0] == 0 || empty($databp[0]) && ($esk_lists_temp->level_band != "" || $esk_lists_temp->level_band !=0)) {
+                    $id_approval = EskApprovalMaster::find()->where(['band' => $esk_lists_temp->level_band])->andWhere('authority_area like "%'.$esk_lists_temp->authority.'%"')->andWhere('directorate like "%'.$esk_lists_temp->old_directorate.'%"')->one();
+                } else {
+                    $id_approval = EskApprovalMaster::find()->where(['band' => $databp[0]])->andWhere('authority_area like "%'.$esk_lists_temp->authority.'%"')->andWhere('directorate like "%'.$esk_lists_temp->old_directorate.'%"')->one();
+                }
                 
                 
-				if(!empty($id_approval)){
+                if(!empty($id_approval)){
                     $esk_lists->id_approval = $id_approval->id;
                     if($esk_lists->save()){
                         //update berita acara detail flag
@@ -923,45 +923,45 @@ class BeritaAcaraController extends Controller
 
                         //=== save approval esk start ===// 
                         $data_approval = EskApprovalDetail::find()->where(['id_approval_master' => $id_approval->id])->all();
-						// bug fixing approval mpp - 12092024 -ejes
-						// >> if($esk_lists->level_band == 4 && (strpos(strtolower($esk_lists->tipe), "pejabat sementara") !== false || strpos(strtolower($esk_lists->tipe), "mutasi aps") !== false || strpos(strtolower($esk_lists->tipe), "sakit berkepanjangan") !== false || strpos(strtolower($model->tipe), "mpp") !== false && $model->level_band <= 4)) {
+                        // bug fixing approval mpp - 12092024 -ejes
+                        // >> if($esk_lists->level_band == 4 && (strpos(strtolower($esk_lists->tipe), "pejabat sementara") !== false || strpos(strtolower($esk_lists->tipe), "mutasi aps") !== false || strpos(strtolower($esk_lists->tipe), "sakit berkepanjangan") !== false || strpos(strtolower($model->tipe), "mpp") !== false && $model->level_band <= 4)) {
                         if( ( $esk_lists->level_band == 4 && (strpos(strtolower($esk_lists->tipe), "pejabat sementara") !== false 
                             || strpos(strtolower($esk_lists->tipe), "mutasi aps") !== false ) ) 
                             ||  ( strpos(strtolower($esk_lists->tipe), "sakit berkepanjangan") !== FALSE || strpos(strtolower($esk_lists->tipe), "mpp") !== FALSE)
                             )
                         {
-							    // PJS
-								$data_a = new EskApprovalLists();
-								$data_a->id_esk 		= $esk_lists->id;
-                                $data_a->approval_nik 	= '7310004';
-								$data_a->approval_name 	= 'Indrawan Ditapradana';
-								$data_a->approval_mail 	= 'indrawan_ditapradana@telkomsel.co.id';
-								$data_a->approval_title = 'Director Human Capital Management';
-								$data_a->sequence 		= 1;
-								$data_a->save();
-						// bug fixing approval mpp - 12092024 -ejes
+                                // PJS
+                                $data_a = new EskApprovalLists();
+                                $data_a->id_esk         = $esk_lists->id;
+                                $data_a->approval_nik   = '7310004';
+                                $data_a->approval_name  = 'Indrawan Ditapradana';
+                                $data_a->approval_mail  = 'indrawan_ditapradana@telkomsel.co.id';
+                                $data_a->approval_title = 'Director Human Capital Management';
+                                $data_a->sequence       = 1;
+                                $data_a->save();
+                        // bug fixing approval mpp - 12092024 -ejes
                         // >> } elseif($esk_lists->level_band >= 5 && (strpos(strtolower($esk_lists->tipe), "pejabat sementara") !== false || strpos(strtolower($esk_lists->tipe), "mutasi aps") !== false || strpos(strtolower($esk_lists->tipe), "sakit berkepanjangan") !== false || strpos(strtolower($esk_lists->tipe), "mpp") !== false && $model->level_band >= 5)) {
                         } elseif($esk_lists->level_band >= 5 && (strpos(strtolower($esk_lists->tipe), "pejabat sementara") !== false || strpos(strtolower($esk_lists->tipe), "mutasi aps") !== false || strpos(strtolower($esk_lists->tipe), "sakit berkepanjangan") !== false || strpos(strtolower($esk_lists->tipe), "mpp") !== false)) {
-								$data_a = new EskApprovalLists();
-								$data_a->id_esk 		= $esk_lists->id;
-								$data_a->approval_nik 	= '7610001';
-								$data_a->approval_name 	= 'Nugroho';
-								$data_a->approval_mail 	= 'nugroho@telkomsel.co.id';
-								$data_a->approval_title = 'President Director';
-								$data_a->sequence 		= 1;
-								$data_a->save();
-						} else {
-							foreach($data_approval as $approval){
-								$data_a = new EskApprovalLists();
-								$data_a->id_esk = $esk_lists->id;
-								$data_a->approval_nik = $approval->nik;
-								$data_a->approval_name = $approval->employee->nama;
-								$data_a->approval_mail = $approval->employee->email;
-								$data_a->approval_title = $approval->employee->title;
-								$data_a->sequence = $approval->sequence;
-								$data_a->save();
-							}
-						}
+                                $data_a = new EskApprovalLists();
+                                $data_a->id_esk         = $esk_lists->id;
+                                $data_a->approval_nik   = '7610001';
+                                $data_a->approval_name  = 'Nugroho';
+                                $data_a->approval_mail  = 'nugroho@telkomsel.co.id';
+                                $data_a->approval_title = 'President Director';
+                                $data_a->sequence       = 1;
+                                $data_a->save();
+                        } else {
+                            foreach($data_approval as $approval){
+                                $data_a = new EskApprovalLists();
+                                $data_a->id_esk = $esk_lists->id;
+                                $data_a->approval_nik = $approval->nik;
+                                $data_a->approval_name = $approval->employee->nama;
+                                $data_a->approval_mail = $approval->employee->email;
+                                $data_a->approval_title = $approval->employee->title;
+                                $data_a->sequence = $approval->sequence;
+                                $data_a->save();
+                            }
+                        }
 
                         $approval_data = EskApprovalLists::find()->where(['id_esk' => $esk_lists->id])->one();
                         $model2 = EskLists::findOne($esk_lists->id);
@@ -969,7 +969,7 @@ class BeritaAcaraController extends Controller
                         $model2->status = "processed";
                         $model2->tracking = "Awaiting approval of ".$approval_data->approval_title;
                         $model2->save();
-						//var_dump($model2->getErrors(),$model2->id);exit;
+                        //var_dump($model2->getErrors(),$model2->id);exit;
                         //=== save ack esk start ===//
                         $this->setAcknowlegeLists($esk_template_master->flag_deliver_to, $esk_lists->nik, $esk_lists->old_position, $esk_lists->new_position, $esk_lists->new_position_id, $esk_lists->authority, $esk_lists->id, $esk_lists->new_directorate);
                         //=== save ack esk end ===//
@@ -1029,7 +1029,7 @@ class BeritaAcaraController extends Controller
     
     public function actionRejectedall(){
         $id_app_data = yii::$app->request->get('id_app_rejected');
-		$id_app = explode(",",$id_app_data);
+        $id_app = explode(",",$id_app_data);
         $remark = yii::$app->request->get('remark');
 
         //inisialisasi data count 
@@ -1038,33 +1038,33 @@ class BeritaAcaraController extends Controller
         $countAll = 0;
         $failed_array = array();
 
-		foreach($id_app as $id_app){
+        foreach($id_app as $id_app){
             //get id master 
             $data_detail = EskBeritaAcaraDetailOther::findOne($id_app);
             $data_detail->flag_esk = 2;
-			$data_detail->flag_ba_manager = 0;
+            $data_detail->flag_ba_manager = 0;
 
-			if($data_detail->save()){
-				//logging data
-				Model::saveLog(Yii::$app->user->identity->username, "Rejected BA data with ID ".$data_detail->id);
+            if($data_detail->save()){
+                //logging data
+                Model::saveLog(Yii::$app->user->identity->username, "Rejected BA data with ID ".$data_detail->id);
 
-				//send mail notifikasi ke creator BA
+                //send mail notifikasi ke creator BA
 
                 //set success count
                 $countSuccess = $countSuccess + 1;
-			}else{
+            }else{
                 //set failed count
                 $countFailed = $countFailed + 1;
 
-				//logging data
+                //logging data
                 $error = implode(",",$data_detail->getErrorSummary(true));
                 array_push($failed_array,"data BA ".$data_detail->nik."/".$data_detail->nama."/".$data_detail->tipe." failed rejected BA because ".$error);
-				Model::saveLog(Yii::$app->user->identity->username, "Failed rejected eSK data for ID BA Detail".$data_detail->id." because ".$error);
+                Model::saveLog(Yii::$app->user->identity->username, "Failed rejected eSK data for ID BA Detail".$data_detail->id." because ".$error);
             }
             
             //count iteration
             $countAll = $countAll + 1;
-		}
+        }
         
         //check failed
         if(!empty($failed_array)){
@@ -1095,12 +1095,12 @@ class BeritaAcaraController extends Controller
      */
     public function actionView($id)
     {
-		$model = $this->findModel($id);
-		if ($stat = Yii::$app->request->post('status')) {
-			$model->status = $stat;
-			if($model->save())
-				return $this->redirect(['view', 'id' => $model->id]);
-		}
+        $model = $this->findModel($id);
+        if ($stat = Yii::$app->request->post('status')) {
+            $model->status = $stat;
+            if($model->save())
+                return $this->redirect(['view', 'id' => $model->id]);
+        }
         return $this->render('view', [
             'model' => $model,
         ]);
@@ -1108,7 +1108,7 @@ class BeritaAcaraController extends Controller
 
     public function actionViewBeritaAcara($id)
     {
-		$model = EskBeritaAcaraOther::findOne($id);
+        $model = EskBeritaAcaraOther::findOne($id);
         $data_detail = EskBeritaAcaraDetailOther::beritaAcaraDetailData($id);
 
         return $this->render('view_ba', [
@@ -1125,18 +1125,18 @@ class BeritaAcaraController extends Controller
     public function actionCreate()
     {
         $model = new BeritaAcara();
-		$model->ba_date = date("Y-m-d");
-		$employee = Yii::$app->user->identity->employee;
-		
+        $model->ba_date = date("Y-m-d");
+        $employee = Yii::$app->user->identity->employee;
+        
         if ($model->load(Yii::$app->request->post())) {
-			$model->category_number = "/e-SK.01/HB-01/".EvaluationData::bulanRomawi()."/".date("Y");
-			$model->no = $model->numberEvaluation. $model->category_number;
-			$model->area = $employee->area;
-			$model->directorate = $employee->directorate;
-			$model->tipe = 'Evaluasi';
-			
-			if($model->save())
-				return $this->redirect(['view', 'id' => $model->id]);
+            $model->category_number = "/e-SK.01/HB-01/".EvaluationData::bulanRomawi()."/".date("Y");
+            $model->no = $model->numberEvaluation. $model->category_number;
+            $model->area = $employee->area;
+            $model->directorate = $employee->directorate;
+            $model->tipe = 'Evaluasi';
+            
+            if($model->save())
+                return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -1145,11 +1145,11 @@ class BeritaAcaraController extends Controller
     }
 
     public function actionCreateBeritaAcara(){
-		set_time_limit(0);
-		ini_set('memory_limit', '2048M');
-		
-		//throw new NotFoundHttpException('Halaman ini adalah halaman Development, mohon masuk ke ESK menggunakan portal HCM : hcm.telkomsel.co.id');
-		
+        set_time_limit(0);
+        ini_set('memory_limit', '2048M');
+        
+        //throw new NotFoundHttpException('Halaman ini adalah halaman Development, mohon masuk ke ESK menggunakan portal HCM : hcm.telkomsel.co.id');
+        
         $model = new EskBeritaAcaraOther();
         if (Yii::$app->request->post()) {
             //get data master
@@ -1162,7 +1162,7 @@ class BeritaAcaraController extends Controller
             $area = (empty(Yii::$app->user->identity->employee)) ? "HEAD OFFICE" : Yii::$app->user->identity->employee->area;
             $created_by = (empty(Yii::$app->user->identity->employee)) ?  "308665" : Yii::$app->user->identity->employee->person_id;
             //$status = 2;
-			$status = $request['status'];
+            $status = $request['status'];
             $data_number = Model::getNumberBa($area,$number_ba);
 
             //set sikom_berita_acara
@@ -1212,14 +1212,14 @@ class BeritaAcaraController extends Controller
                                     $transaction->rollBack();
                                     Yii::$app->session->setFlash('error', "Berita Acara data was not created.");
                                 }
-								/*
-								else{
+                                /*
+                                else{
                                     //regenerate eSK
-									echo "masukkah?";exit;
+                                    echo "masukkah?";exit;
                                     $this->regenerateEsk($ba_detail->id,"1");
                                 }
-								*/
-								
+                                */
+                                
                                 $delete_ba_temp = EskBeritaAcaraDetailOtherTemp::deleteAll('batch_number = "'.$batch_number.'"');
 
                                 //set detail data for email to approval
@@ -1299,12 +1299,12 @@ class BeritaAcaraController extends Controller
 
         return $vp_nik;
     }
-	
+    
 
     public function actionImportEmployeeUpdate($batch_number,$temp = null)
     {   
         set_time_limit(0);
-		ini_set('memory_limit', '2048M');
+        ini_set('memory_limit', '2048M');
         $data_error = "";
 
         if (Yii::$app->request->post()) {
@@ -1326,7 +1326,7 @@ class BeritaAcaraController extends Controller
                     if(
                         isset($item['nik'])
                     ){
-						//get data
+                        //get data
                         $nik =  trim(preg_replace('/\s\s+/', ' ',$item['nik']));
                         $nama =  trim(preg_replace('/\s\s+/', ' ',$item['nama']));
                         $title  = $item['title'];
@@ -1466,19 +1466,19 @@ class BeritaAcaraController extends Controller
         return $this->renderAjax('upload');
     }
 
-	public function actionTesaja()
-	{
-		$model = new Employee;
-		
-		$model->isPensiun();
-	}
-	
+    public function actionTesaja()
+    {
+        $model = new Employee;
+        
+        $model->isPensiun();
+    }
+    
 
     public function actionImportEmployee($batch_number,$temp = null)
     {   
-		set_time_limit(0);
-		ini_set('memory_limit', '3048M');
-		
+        set_time_limit(0);
+        ini_set('memory_limit', '3048M');
+        
         $data_error = "";
 
         if (Yii::$app->request->post()) {
@@ -1503,7 +1503,7 @@ class BeritaAcaraController extends Controller
                         isset($item['NEW_POSITION']) && isset($item['NEW_ORGANIZATION']) &&
                         isset($item['NEW_CITY'])
                     ){
-						
+                        
                         //get data
                         $nik =  trim(preg_replace('/\s\s+/', ' ',$item['NIK']));
                         $ba_date = $item['EFFECTIVE_DATE'];
@@ -1536,10 +1536,10 @@ class BeritaAcaraController extends Controller
                         $new_organization  = $item['NEW_ORGANIZATION'];
                         $new_city = $item['NEW_CITY'];
                         $new_bp = trim(preg_replace('/\s\s+/', ' ',$item['NEW_BP']));
-						$gaji_dasar_nss = $item['GAJI_DASAR_BSS'];
-						$tbh_nss = $item['TBH_BSS'];
-						$tunjangan_rekomposisi_nss = $item['TUNJANGAN_REKOMPOSISI_BSS'];
-						$tunjab_nss = $item['TUNJAB_BSS'];
+                        $gaji_dasar_nss = $item['GAJI_DASAR_BSS'];
+                        $tbh_nss = $item['TBH_BSS'];
+                        $tunjangan_rekomposisi_nss = $item['TUNJANGAN_REKOMPOSISI_BSS'];
+                        $tunjab_nss = $item['TUNJAB_BSS'];
                         // add by faqih
                         $nik_new_atasan =  trim(preg_replace('/\s\s+/', ' ',$item['ATASAN_BARU']));
                         $tunjangan_hot_skill = $item['TUNJANGAN_HOT_SKILL'];
@@ -1571,17 +1571,17 @@ class BeritaAcaraController extends Controller
                         $leaving_reason = trim($item['LEAVING_REASON']);
                         // end
 
-						$datakar = Employee::findOne(['nik' => $nik]);
-						if(!empty($datakar)) {
-							$data_kr_bss = EskCodeParam::findOne(['band' => $datakar->band, 'directorate' => $datakar->directorate, 'code' => '{kr_organisasi_bss}']);
-							if(!empty($data_kr_bss)) {
-								$kr_bss = $data_kr_bss->value;
-							}
-						} 
-						
-						$level_gaji 	= $item['LEVEL_GAJI'];
-						$level_posisi 	= $item['LEVEL_POSISI'];
-						
+                        $datakar = Employee::findOne(['nik' => $nik]);
+                        if(!empty($datakar)) {
+                            $data_kr_bss = EskCodeParam::findOne(['band' => $datakar->band, 'directorate' => $datakar->directorate, 'code' => '{kr_organisasi_bss}']);
+                            if(!empty($data_kr_bss)) {
+                                $kr_bss = $data_kr_bss->value;
+                            }
+                        } 
+                        
+                        $level_gaji     = $item['LEVEL_GAJI'];
+                        $level_posisi   = $item['LEVEL_POSISI'];
+                        
                         //get data employee 
                         $employee = Employee::find()->where(['nik' => $nik])->one();
 
@@ -1664,12 +1664,12 @@ class BeritaAcaraController extends Controller
                             }
 
                             //check org
-							$check_position = Position::find()->where('nama = "'.$new_position.'" AND organization = "'.$new_organization.'" AND LOWER(desc_city) = "'.strtolower($new_city).'" AND (position_code iS NOT NULL or position_code <> "") AND status = 1 AND band IS NOT NULL AND directorate IS NOT NULL')->one();
+                            $check_position = Position::find()->where('nama = "'.$new_position.'" AND organization = "'.$new_organization.'" AND LOWER(desc_city) = "'.strtolower($new_city).'" AND (position_code iS NOT NULL or position_code <> "") AND status = 1 AND band IS NOT NULL AND directorate IS NOT NULL')->one();
                             if(empty($check_position)) {
-								$check_position = Position::find()->where('nama = "Senior Staff" AND organization = "'.$new_organization.'" AND LOWER(desc_city) = "'.strtolower($new_city).'" AND band >= "'.$check_band.'" AND (position_code iS NOT NULL or position_code <> "") AND status = 1 AND band IS NOT NULL AND directorate IS NOT NULL')->one();
+                                $check_position = Position::find()->where('nama = "Senior Staff" AND organization = "'.$new_organization.'" AND LOWER(desc_city) = "'.strtolower($new_city).'" AND band >= "'.$check_band.'" AND (position_code iS NOT NULL or position_code <> "") AND status = 1 AND band IS NOT NULL AND directorate IS NOT NULL')->one();
                             }
-							//var_dump($new_organization,$new_city,$employee->band);exit;
-							if(!empty($check_position)){
+                            //var_dump($new_organization,$new_city,$employee->band);exit;
+                            if(!empty($check_position)){
                                 if(strpos($new_position,"Senior Staff") !== false){
                                     $position_id = "Senior Staff";
                                     $position_id_org = $check_position->id;
@@ -1686,10 +1686,10 @@ class BeritaAcaraController extends Controller
                                 continue;
                             }
                         }else{
-							if (strpos($item['NEW_POSITION'], 'Pj.') !== false) {
-								$new_position = trim($item['NEW_POSITION'],"Pj. ");
-							}
-							
+                            if (strpos($item['NEW_POSITION'], 'Pj.') !== false) {
+                                $new_position = trim($item['NEW_POSITION'],"Pj. ");
+                            }
+                            
                             $check_position = Position::find()->where('nama = "'.$new_position.'" AND organization = "'.$new_organization.'" AND LOWER(desc_city) = "'.strtolower($new_city).'" AND (position_code iS NOT NULL or position_code <> "") AND status = 1 AND band IS NOT NULL AND directorate IS NOT NULL')->one();
                             if(!empty($check_position)){
                                 $position_id = $check_position->id;
@@ -1712,14 +1712,14 @@ class BeritaAcaraController extends Controller
                             $model = new EskBeritaAcaraDetailOtherTemp();
                             $model->batch_number = $batch_number;
                             $flag_reject = 0;
-							
+                            
                         }else{
                             $data_ba_exist = EskBeritaAcaraDetailOther::find()->where(['id_master' => $batch_number,'nik' => $nik, 'tipe' => $tipe])->one();
                             $rollback_update = EskBeritaAcaraDetailOtherTemp::find()->where(['batch_number' => $batch_number,'nik' => $nik, 'tipe' => $tipe])->one();
                             $model = new EskBeritaAcaraDetailOther();
                             $model->id_master = $batch_number;
                             $flag_reject = ($data_ba_exist->flag_esk == 2) ? 1 : 0;
-							
+                            
                         }
                         $data_ba_old = $data_ba_exist;
 
@@ -1785,46 +1785,46 @@ class BeritaAcaraController extends Controller
                             array_push($failed_array,"data Employee for row ".$i." (".$item['TIPE_BA']."/".$item['NIK'].") failed because code template of eSK not found!");
                             continue;
                         }else{
-                        	// $cekgroup_reason = EskGroupReasonData::find()->where(['id' => $cek_template->id_reason])->one();
-                        	$cekgroup_reason = EskGroupReasonData::findOne($cek_template->id_reason);
+                            // $cekgroup_reason = EskGroupReasonData::find()->where(['id' => $cek_template->id_reason])->one();
+                            $cekgroup_reason = EskGroupReasonData::findOne($cek_template->id_reason);
 
-                        	if(strpos($cekgroup_reason->group, 'Terminate') !== false ){
-                        		if(empty($notif_stat_date)){
-                        			 $countFailed = $countFailed + 1;
+                            if(strpos($cekgroup_reason->group, 'Terminate') !== false ){
+                                if(empty($notif_stat_date)){
+                                     $countFailed = $countFailed + 1;
                                         
-		                            //logging data
-		                            array_push($failed_array,"data Employee for row ".$i." (".$item['TIPE_BA']."/".$item['NIK'].") failed because Group Reason for (".$cekgroup_reason->group.") field STATEMENT_DATE nust be insert!");
-		                            continue;
-                        		}
+                                    //logging data
+                                    array_push($failed_array,"data Employee for row ".$i." (".$item['TIPE_BA']."/".$item['NIK'].") failed because Group Reason for (".$cekgroup_reason->group.") field STATEMENT_DATE nust be insert!");
+                                    continue;
+                                }
 
-                        		if(empty($leaving_reason)){
-                        			 $countFailed = $countFailed + 1;
+                                if(empty($leaving_reason)){
+                                     $countFailed = $countFailed + 1;
                                         
-		                            //logging data
-		                            array_push($failed_array,"data Employee for row ".$i." (".$item['TIPE_BA']."/".$item['NIK'].") failed because Group Reason for (".$cekgroup_reason->group.") field LEAVING_REASON nust be insert!");
-		                            continue;
-                        		}else{
-                        			$conn = Yii::$app->dbOra;
-									$dataOra = $conn->createCommand("SELECT * FROM TSEL_HR_LEAVE_REASON_V WHERE MEANING = '".$leaving_reason."' ")
-										->queryAll();
-									if(empty($dataOra)){
-										$countFailed = $countFailed + 1;
+                                    //logging data
+                                    array_push($failed_array,"data Employee for row ".$i." (".$item['TIPE_BA']."/".$item['NIK'].") failed because Group Reason for (".$cekgroup_reason->group.") field LEAVING_REASON nust be insert!");
+                                    continue;
+                                }else{
+                                    $conn = Yii::$app->dbOra;
+                                    $dataOra = $conn->createCommand("SELECT * FROM TSEL_HR_LEAVE_REASON_V WHERE MEANING = '".$leaving_reason."' ")
+                                        ->queryAll();
+                                    if(empty($dataOra)){
+                                        $countFailed = $countFailed + 1;
                                         
-			                            //logging data
-			                            array_push($failed_array,"data Employee for row ".$i." (".$item['TIPE_BA']."/".$item['NIK'].") failed because Group Reason for (".$cekgroup_reason->group.") field LEAVING_REASON Not Available in EBS data");
-			                            continue;
-									}
-                        		}
-                        	}
+                                        //logging data
+                                        array_push($failed_array,"data Employee for row ".$i." (".$item['TIPE_BA']."/".$item['NIK'].") failed because Group Reason for (".$cekgroup_reason->group.") field LEAVING_REASON Not Available in EBS data");
+                                        continue;
+                                    }
+                                }
+                            }
 
-                        	if(strpos($cekgroup_reason->reason, 'Contract To Permanent') !== false){
-                    			if(empty($new_nik)){
-                    				$countFailed = $countFailed + 1;
+                            if(strpos($cekgroup_reason->reason, 'Contract To Permanent') !== false){
+                                if(empty($new_nik)){
+                                    $countFailed = $countFailed + 1;
                                     
-		                            //logging data
-		                            array_push($failed_array,"data Employee for row ".$i." (".$item['TIPE_BA']."/".$item['NIK'].") failed because Reason for (".$cekgroup_reason->reason.") field NEW_NIK nust be insert!");
-		                            continue;
-                    			}else{
+                                    //logging data
+                                    array_push($failed_array,"data Employee for row ".$i." (".$item['TIPE_BA']."/".$item['NIK'].") failed because Reason for (".$cekgroup_reason->reason.") field NEW_NIK nust be insert!");
+                                    continue;
+                                }else{
                                     $datanik = Employee::findOne(['nik' => $new_nik]);
                                     if(!empty($datanik)) {
                                         $countFailed = $countFailed + 1;
@@ -1833,7 +1833,7 @@ class BeritaAcaraController extends Controller
                                         continue;
                                     }
                                 }
-                    		}
+                            }
                         }
                         
                         //validasi additional content
@@ -1922,19 +1922,19 @@ class BeritaAcaraController extends Controller
                             $count_validasi++;     
                             array_push($failed_array,"data of KISEL Member for row ".$i." (".$item['TIPE_BA']."/".$item['NIK'].") must be insert! ");
                         }
-						if($check_position->band == 0 || empty($check_position->band)){
+                        if($check_position->band == 0 || empty($check_position->band)){
                             $count_validasi++;     
                             array_push($failed_array,"data of Position Band/Level Posisi for row ".$i." (".$item['TIPE_BA']."/".$item['NIK'].") is empty! ");
                         }
-						if($check_position->directorate == "" || empty($check_position->directorate)){
+                        if($check_position->directorate == "" || empty($check_position->directorate)){
                             $count_validasi++;     
                             array_push($failed_array,"data of Directorate for row ".$i." (".$item['TIPE_BA']."/".$item['NIK'].") is empty! ");
                         }
-						if($employee->directorate == "" || empty($employee->directorate)){
+                        if($employee->directorate == "" || empty($employee->directorate)){
                             $count_validasi++;     
                             array_push($failed_array,"data of Directorate in Table Employee/Karyawan for row ".$i." (".$item['TIPE_BA']."/".$item['NIK'].") is empty! ");
                         }
-						
+                        
                         //check apakah ada error diadditional field
                         if($count_validasi > 0){
                             //not exist data organization continue iteration
@@ -1944,29 +1944,29 @@ class BeritaAcaraController extends Controller
                             array_push($failed_array,"data Employee for row ".$i." (".$item['TIPE_BA']."/".$item['NIK'].") failed because some additional data is empty!");
                             continue;
                         }
-						
+                        
                         if(empty($data_ba_exist)){
-							//strpos($item['TIPE_BA'], 'Promosi') !== false  || 
-							if ((strpos($item['TIPE_BA'], 'Evaluasi') !== false || strpos($item['TIPE_BA'], 'Promosi') !== false || strpos($item['NEW_POSITION'], 'Pj. ') !== false || strpos($position_lama, 'Pj.') !== false) && $check_position->structural == 'Y' && $check_position->band >= 2) {
-								
-								if(strpos($item['TIPE_BA'], 'Evaluasi Final') !== false) {
-									$position_baru = $item['NEW_POSITION'];
-								} else {
-									$position_baru = 'Pj. ' . $item['NEW_POSITION'];
-								}
-							} elseif(strpos($item['NEW_POSITION'], 'Pj.') !== false) {
-								$position_baru = 'Pj. ' . $item['NEW_POSITION'];
-							}
-							
-							
-							
-							/*
-							if(intval($level_gaji) > intval((substr($employee->bi,0,1)))){
-								$position_baru = trim($position_baru,"Pj. ");
-							}
-							*/
-							
-							
+                            //strpos($item['TIPE_BA'], 'Promosi') !== false  || 
+                            if ((strpos($item['TIPE_BA'], 'Evaluasi') !== false || strpos($item['TIPE_BA'], 'Promosi') !== false || strpos($item['NEW_POSITION'], 'Pj. ') !== false || strpos($position_lama, 'Pj.') !== false) && $check_position->structural == 'Y' && $check_position->band >= 2) {
+                                
+                                if(strpos($item['TIPE_BA'], 'Evaluasi Final') !== false) {
+                                    $position_baru = $item['NEW_POSITION'];
+                                } else {
+                                    $position_baru = 'Pj. ' . $item['NEW_POSITION'];
+                                }
+                            } elseif(strpos($item['NEW_POSITION'], 'Pj.') !== false) {
+                                $position_baru = 'Pj. ' . $item['NEW_POSITION'];
+                            }
+                            
+                            
+                            
+                            /*
+                            if(intval($level_gaji) > intval((substr($employee->bi,0,1)))){
+                                $position_baru = trim($position_baru,"Pj. ");
+                            }
+                            */
+                            
+                            
                             $model->person_id = $employee->person_id;
                             $model->nik = $nik;
                             $model->nama = $employee->nama;
@@ -1990,11 +1990,11 @@ class BeritaAcaraController extends Controller
                             $model->new_area = $position->area;
                             $model->new_bgroup = $position->grp;
                             $model->new_bp = (!empty($new_bp)) ? $new_bp : $position->bp;
-							if($level_gaji == "" || empty($level_gaji)) {
-								$model->new_bi = substr($employee->bi,0,1);
-							} else {
-								$model->new_bi = $level_gaji;
-							}
+                            if($level_gaji == "" || empty($level_gaji)) {
+                                $model->new_bi = substr($employee->bi,0,1);
+                            } else {
+                                $model->new_bi = $level_gaji;
+                            }
                             //$model->new_bi = $new_bi;
                             $model->new_department = $position->department;
                             $model->new_directorate = $position->directorate;
@@ -2019,7 +2019,7 @@ class BeritaAcaraController extends Controller
                             $model->keputusan_direksi_2 = $kd_2;
                             $model->keputusan_direksi_3 = $kd_3;
                             $model->keterangan_ba_1 = $ba_1;
-							$ba_2 = str_replace("Broadband Salary", "<i>Broadband Salary</i>", $ba_2);
+                            $ba_2 = str_replace("Broadband Salary", "<i>Broadband Salary</i>", $ba_2);
                             $model->keterangan_ba_2 = $ba_2;
                             $model->keterangan_ba_3 = $ba_3;
                             $model->cltp_reason = $cltp_reason;
@@ -2032,53 +2032,53 @@ class BeritaAcaraController extends Controller
                             $model->scholarship_program = $scholarship_program;
                             $model->scholarship_university = $scholarship_university;
                             $model->scholarship_level = $scholarship_level;
-							$model->band = $employee->band;
-							//if($check_position->bp != "" && intval(substr($check_position->bp,0,1)) <= 0) {
-							
-							
-							if($level_posisi !== NULL) {
-								$model->level_band = $level_posisi;
-							} else {
-								$model->level_band = $check_position->band;
-							}
-							//} 
-							/* // kalo ngga ketemu di errorin aja, ini malah bikin ngga valid.
-							else {
-								$model->level_band = intval(substr($employee->bp,0,1));
-							}*/
-							if($level_gaji == "" || empty($level_gaji)) {
-								$model->level_gaji = substr($employee->bi,0,1);
-							} else {
-								$model->level_gaji = $level_gaji;
-							}
-							$model->flag_kisel = $flag_kisel;
-							$model->gaji_dasar_nss = intval($gaji_dasar_nss);
-							$model->tbh_nss = intval($tbh_nss);
-							$model->tunjangan_rekomposisi_nss = intval($tunjangan_rekomposisi_nss);
-							if($model->level_band > 1 && !empty($model->level_band)) {
-								if($tunjab_nss < 0 || empty($tunjab_nss) ||  is_null($tunjab_nss) == true) {
-									$data_tunjab 		 = Model::getTunjabNss($model->level_band);
-									$model->tunjab_nss	 = $data_tunjab['tunjab_nss'];		
-								} else {
-									$model->tunjab_nss = $tunjab_nss;
-								}
-							}
-							$model->kr_organisasi_bss = $kr_bss;
-							$datapersen = EskTunjabNss::findOne(['level' => $model->level_gaji]);
-							$model->persen_biaya_hidup_bss = $datapersen->persen_biaya_hidup;
-							$model->persen_rekom_bss = $datapersen->persen_rekom;
-							
+                            $model->band = $employee->band;
+                            //if($check_position->bp != "" && intval(substr($check_position->bp,0,1)) <= 0) {
+                            
+                            
+                            if($level_posisi !== NULL) {
+                                $model->level_band = $level_posisi;
+                            } else {
+                                $model->level_band = $check_position->band;
+                            }
+                            //} 
+                            /* // kalo ngga ketemu di errorin aja, ini malah bikin ngga valid.
+                            else {
+                                $model->level_band = intval(substr($employee->bp,0,1));
+                            }*/
+                            if($level_gaji == "" || empty($level_gaji)) {
+                                $model->level_gaji = substr($employee->bi,0,1);
+                            } else {
+                                $model->level_gaji = $level_gaji;
+                            }
+                            $model->flag_kisel = $flag_kisel;
+                            $model->gaji_dasar_nss = intval($gaji_dasar_nss);
+                            $model->tbh_nss = intval($tbh_nss);
+                            $model->tunjangan_rekomposisi_nss = intval($tunjangan_rekomposisi_nss);
+                            if($model->level_band > 1 && !empty($model->level_band)) {
+                                if($tunjab_nss < 0 || empty($tunjab_nss) ||  is_null($tunjab_nss) == true) {
+                                    $data_tunjab         = Model::getTunjabNss($model->level_band);
+                                    $model->tunjab_nss   = $data_tunjab['tunjab_nss'];      
+                                } else {
+                                    $model->tunjab_nss = $tunjab_nss;
+                                }
+                            }
+                            $model->kr_organisasi_bss = $kr_bss;
+                            $datapersen = EskTunjabNss::findOne(['level' => $model->level_gaji]);
+                            $model->persen_biaya_hidup_bss = $datapersen->persen_biaya_hidup;
+                            $model->persen_rekom_bss = $datapersen->persen_rekom;
+                            
                             // perubahan approval mpp dan sakit berkepanjangan - 12092024 -ejes
                             
                             if (strpos(strtolower($model->tipe), "sakit berkepanjangan") !== false || strpos(strtolower($model->tipe), "mpp") !== false) {
-                                $model->flag_ba_manager 	= 1;
-                                $model->nik_approved_ba 	= '86149'; // approval pertama ke mas arnold
+                                $model->flag_ba_manager     = 1;
+                                $model->nik_approved_ba     = '86149'; // approval pertama ke mas arnold
                            
                             }else{  
                                 
                                 if($model->level_band <= 3) {
-                                    $model->flag_ba_manager 		= 1;
-                                    //$model->nik_approved_ba 	= $this->getHeadCreator();
+                                    $model->flag_ba_manager         = 1;
+                                    //$model->nik_approved_ba   = $this->getHeadCreator();
                                     //find so
                                     $so = EskSo::find()->where(['nik' => Yii::$app->user->identity->employee->nik])->andWhere(['directorate' => $model->old_directorate])->one();
                                     if(!empty($so)) {
@@ -2089,12 +2089,12 @@ class BeritaAcaraController extends Controller
                                 
                                 // >> } elseif($model->level_band >=4) {
                                 } elseif( $model->level_band >=4 ) {
-                                    $model->flag_ba_manager 	= 1;
-                                    $model->nik_approved_ba 	= '86149'; // approval pertama ke mas arnold
+                                    $model->flag_ba_manager     = 1;
+                                    $model->nik_approved_ba     = '86149'; // approval pertama ke mas arnold
                                 } 
                             }
-							//var_dump($this->getHeadCreator());exit;
-							$model->created_by = Yii::$app->user->identity->nik;
+                            //var_dump($this->getHeadCreator());exit;
+                            $model->created_by = Yii::$app->user->identity->nik;
                             // add by faqih
                             $model->nik_new_atasan = $nik_new_atasan;
                             $model->tunjangan_hot_skill = $tunjangan_hot_skill;
@@ -2110,17 +2110,17 @@ class BeritaAcaraController extends Controller
                             $model->new_nik = $new_nik;
                             $model->leaving_reason = $leaving_reason;
                             // end
-					
-							//var_dump($model->level_band, $model->tunjab_nss);exit;
+                    
+                            //var_dump($model->level_band, $model->tunjab_nss);exit;
                             if($model->save()){
                                 if($temp == null){
                                     $model_2 = EskBeritaAcaraDetailOtherTemp::findOne($model->id);
                                 }else{
                                     $model_2 = EskBeritaAcaraDetailOther::findOne($model->id);
-								
-									if($model_2->level_band >= 4) {
-										$model_2->flag_esk = 6;
-									}
+                                
+                                    if($model_2->level_band >= 4) {
+                                        $model_2->flag_esk = 6;
+                                    }
                                 }
 
                                 //check eSK
@@ -2199,11 +2199,11 @@ class BeritaAcaraController extends Controller
                             $data_ba_exist->new_area = $position->area;
                             $data_ba_exist->new_bgroup = $position->grp;
                             $data_ba_exist->new_bp = (!empty($new_bp)) ? $new_bp : $position->bp;
-							if($level_gaji == "" || empty($level_gaji)) {
-								$data_ba_exist->new_bi = substr($employee->bi,0,1);
-							} else {
-								$data_ba_exist->new_bi = $level_gaji;
-							}
+                            if($level_gaji == "" || empty($level_gaji)) {
+                                $data_ba_exist->new_bi = substr($employee->bi,0,1);
+                            } else {
+                                $data_ba_exist->new_bi = $level_gaji;
+                            }
                             //$data_ba_exist->new_bi = $new_bi;
                             $data_ba_exist->new_department = $position->department;
                             $data_ba_exist->new_directorate = $position->directorate;
@@ -2228,7 +2228,7 @@ class BeritaAcaraController extends Controller
                             $data_ba_exist->keputusan_direksi_2 = $kd_2;
                             $data_ba_exist->keputusan_direksi_3 = $kd_3;
                             $data_ba_exist->keterangan_ba_1 = $ba_1;
-							$ba_2 = str_replace("Broadband Salary", "<i>Broadband Salary</i>", $ba_2);
+                            $ba_2 = str_replace("Broadband Salary", "<i>Broadband Salary</i>", $ba_2);
                             $data_ba_exist->keterangan_ba_2 = $ba_2;
                             $data_ba_exist->keterangan_ba_3 = $ba_3;
                             $data_ba_exist->cltp_reason = $cltp_reason;
@@ -2242,33 +2242,33 @@ class BeritaAcaraController extends Controller
                             $data_ba_exist->scholarship_university = $scholarship_university;
                             $data_ba_exist->scholarship_level = $scholarship_level;
                             $data_ba_exist->flag_kisel = $flag_kisel;
-							$data_ba_exist->band = $employee->band;
-							if($level_posisi !== NULL) {
-								$data_ba_exist->level_band = $level_posisi;
-							} else {
-								$data_ba_exist->level_band = $check_position->band;
-							}
-							if($level_gaji == "" || empty($level_gaji)) {
-								$data_ba_exist->level_gaji = substr($employee->bi,0,1);
+                            $data_ba_exist->band = $employee->band;
+                            if($level_posisi !== NULL) {
+                                $data_ba_exist->level_band = $level_posisi;
                             } else {
-								$data_ba_exist->level_gaji = $level_gaji;
-							}
-							$data_ba_exist->gaji_dasar_nss = $gaji_dasar_nss;
-							$data_ba_exist->tbh_nss = $tbh_nss;
-							$data_ba_exist->tunjangan_rekomposisi_nss = $tunjangan_rekomposisi_nss;
-							$data_ba_exist->tunjab_nss = $tunjab_nss;
-							if($employee->band > 1 && !empty($employee->band)) {
-								if($tunjab_nss < 0 || empty($tunjab_nss) ||  is_null($tunjab_nss) == true) {
-									$data_tunjab 		 = Model::getTunjabNss($data_ba_exist->level_band);
-									$data_ba_exist->tunjab_nss	 = $data_tunjab['tunjab_nss'];		
-								} else {
-									$data_ba_exist->tunjab_nss = $tunjab_nss;
-								}
-							}
-							$data_ba_exist->kr_organisasi_bss = $kr_bss;
-							$datapersen = EskTunjabNss::findOne(['level' => $data_ba_exist->level_gaji]);
-							$data_ba_exist->persen_biaya_hidup_bss = $datapersen->persen_biaya_hidup;
-							$data_ba_exist->persen_rekom_bss = $datapersen->persen_rekom;
+                                $data_ba_exist->level_band = $check_position->band;
+                            }
+                            if($level_gaji == "" || empty($level_gaji)) {
+                                $data_ba_exist->level_gaji = substr($employee->bi,0,1);
+                            } else {
+                                $data_ba_exist->level_gaji = $level_gaji;
+                            }
+                            $data_ba_exist->gaji_dasar_nss = $gaji_dasar_nss;
+                            $data_ba_exist->tbh_nss = $tbh_nss;
+                            $data_ba_exist->tunjangan_rekomposisi_nss = $tunjangan_rekomposisi_nss;
+                            $data_ba_exist->tunjab_nss = $tunjab_nss;
+                            if($employee->band > 1 && !empty($employee->band)) {
+                                if($tunjab_nss < 0 || empty($tunjab_nss) ||  is_null($tunjab_nss) == true) {
+                                    $data_tunjab         = Model::getTunjabNss($data_ba_exist->level_band);
+                                    $data_ba_exist->tunjab_nss   = $data_tunjab['tunjab_nss'];      
+                                } else {
+                                    $data_ba_exist->tunjab_nss = $tunjab_nss;
+                                }
+                            }
+                            $data_ba_exist->kr_organisasi_bss = $kr_bss;
+                            $datapersen = EskTunjabNss::findOne(['level' => $data_ba_exist->level_gaji]);
+                            $data_ba_exist->persen_biaya_hidup_bss = $datapersen->persen_biaya_hidup;
+                            $data_ba_exist->persen_rekom_bss = $datapersen->persen_rekom;
 
                             // add by faqih
                             $data_ba_exist->nik_new_atasan = $nik_new_atasan;
@@ -2285,7 +2285,7 @@ class BeritaAcaraController extends Controller
                             $data_ba_exist->new_nik = $new_nik;
                             $data_ba_exist->leaving_reason = $leaving_reason;
                             // end
-							
+                            
                             if($data_ba_exist->save()){
                                 //check eSK
                                 $check_esk_data = $this->checkGenerateEsk($data_ba_exist->id,$temp);
@@ -2426,11 +2426,11 @@ class BeritaAcaraController extends Controller
               
 
         $conn = Yii::$app->dbOra;
-		$dataOra = $conn->createCommand('SELECT * FROM TSEL_HR_LEAVE_REASON_V')
-			->queryAll();
+        $dataOra = $conn->createCommand('SELECT * FROM TSEL_HR_LEAVE_REASON_V')
+            ->queryAll();
 
 
-		// $fk = array();
+        // $fk = array();
         $no = 2;
         // $worksheet->setActiveSheetIndex(1)->getCell('B'. 1)->setValue("CODE");
         // $worksheet->setActiveSheetIndex(1)getCell('C'. 1)->setValue("MEANING");
@@ -2441,9 +2441,9 @@ class BeritaAcaraController extends Controller
         // $worksheet2->getCell('A5')->setValue('Months');
         // $worksheet2->getCell('A6')->setValue('Years');
 
-		foreach($dataOra as $rows)
-		{
-			// array_push($fk, $rows['MEANING']);
+        foreach($dataOra as $rows)
+        {
+            // array_push($fk, $rows['MEANING']);
             $row = $no;
             $spreadsheet->setActiveSheetIndex(1)->getCell('B'. $row)->setValue($rows['CODE']);
             $spreadsheet->setActiveSheetIndex(1)->getCell('C'. $row)->setValue($rows['MEANING']);
@@ -2457,33 +2457,33 @@ class BeritaAcaraController extends Controller
         $validation1 = ''.$worksheet2->getTitle().'!$C$1:$C$'.$no.''; //'=Sheet2!$C$1:$C$46' // 'OFFSET(Sheet2!$A$1;1;2;COUNTA(Sheet2!$C:$';
         $validation2 = ''.$worksheet2->getTitle().'!$A$1:$A$5';
         for($i = 2; $i < 5; $i++){
-        	$objValidation = $spreadsheet->setActiveSheetIndex(0)->getCell('AJ2'.$i)->getDataValidation();
-	        $objValidation->setType(\PHPExcel_Cell_DataValidation::TYPE_LIST);
-	        $objValidation->setErrorStyle(\PHPExcel_Cell_DataValidation::STYLE_INFORMATION);
-	        $objValidation->setAllowBlank(false);
-	        $objValidation->setShowInputMessage(true);
-	        $objValidation->setShowDropDown(true);
-	        $objValidation->setPromptTitle('Pick Storage Condition For Terminate');
-	        $objValidation->setPrompt('Please pick a value from the drop-down list.');
-	        $objValidation->setErrorTitle('Input error');
-	        $objValidation->setError('Value is not in list');
-	        $objValidation->setFormula1($validation1);
+            $objValidation = $spreadsheet->setActiveSheetIndex(0)->getCell('AJ2'.$i)->getDataValidation();
+            $objValidation->setType(\PHPExcel_Cell_DataValidation::TYPE_LIST);
+            $objValidation->setErrorStyle(\PHPExcel_Cell_DataValidation::STYLE_INFORMATION);
+            $objValidation->setAllowBlank(false);
+            $objValidation->setShowInputMessage(true);
+            $objValidation->setShowDropDown(true);
+            $objValidation->setPromptTitle('Pick Storage Condition For Terminate');
+            $objValidation->setPrompt('Please pick a value from the drop-down list.');
+            $objValidation->setErrorTitle('Input error');
+            $objValidation->setError('Value is not in list');
+            $objValidation->setFormula1($validation1);
 
-	        $DPE = ['Hours', 'Days', 'Weeks', 'Months', 'Years'];
+            $DPE = ['Hours', 'Days', 'Weeks', 'Months', 'Years'];
 
-	        $objValidation1 = $spreadsheet->setActiveSheetIndex(0)->getCell('K2'.$i)->getDataValidation();
-	        $objValidation1->setType(\PHPExcel_Cell_DataValidation::TYPE_LIST);
-	        $objValidation1->setErrorStyle(\PHPExcel_Cell_DataValidation::STYLE_INFORMATION);
-	        $objValidation1->setAllowBlank(false);
-	        $objValidation1->setShowInputMessage(true);
-	        $objValidation1->setShowDropDown(true);
-	        $objValidation1->setPromptTitle('Pick Storage Condition');
-	        $objValidation1->setPrompt('Please pick a value from the drop-down list.');
-	        $objValidation1->setErrorTitle('Input error');
-	        $objValidation1->setError('Value is not in list');
-	        // $objValidation1->setFormula1('"'.implode(',', $DPE).'"');
-	        $objValidation1->setFormula1($validation2);
-	        
+            $objValidation1 = $spreadsheet->setActiveSheetIndex(0)->getCell('K2'.$i)->getDataValidation();
+            $objValidation1->setType(\PHPExcel_Cell_DataValidation::TYPE_LIST);
+            $objValidation1->setErrorStyle(\PHPExcel_Cell_DataValidation::STYLE_INFORMATION);
+            $objValidation1->setAllowBlank(false);
+            $objValidation1->setShowInputMessage(true);
+            $objValidation1->setShowDropDown(true);
+            $objValidation1->setPromptTitle('Pick Storage Condition');
+            $objValidation1->setPrompt('Please pick a value from the drop-down list.');
+            $objValidation1->setErrorTitle('Input error');
+            $objValidation1->setError('Value is not in list');
+            // $objValidation1->setFormula1('"'.implode(',', $DPE).'"');
+            $objValidation1->setFormula1($validation2);
+            
         }
 
         
@@ -2865,7 +2865,7 @@ class BeritaAcaraController extends Controller
     public function checkGenerateEsk($ba,$temp){
         //inisialisasi awal
         set_time_limit(0);
-		ini_set('memory_limit', '2048M');
+        ini_set('memory_limit', '2048M');
         $model = new EskListsTemp();
 
         if($temp == null){
@@ -2889,14 +2889,15 @@ class BeritaAcaraController extends Controller
 
         //search tipe ba di template esk master
         if(is_null($databp[0]) || $databp[0] == "") {
-			$dataemployee = Employee::findOne(['nik' => $data_ba->nik]);
-			$databp = explode(".",$dataemployee->bp);
-		}
-		
-		//var_dump($data_ba->tipe,$data_ba->code_template,$databp[0],$data_ba->old_area,$data_ba->new_area,$data_ba->old_directorate);exit;
-		$data_esk_master = Model::checkTemplateMaster($data_ba->tipe,$data_ba->code_template,$databp[0],$data_ba->old_area,$data_ba->new_area,$data_ba->old_directorate);
+            $dataemployee = Employee::findOne(['nik' => $data_ba->nik]);
+            $databp = explode(".",$dataemployee->bp);
+        }
+        
+        //var_dump($data_ba->tipe,$data_ba->code_template,$databp[0],$data_ba->old_area,$data_ba->new_area,$data_ba->old_directorate);exit;
+        /** ejes 011024 ada merubah di model.php terkait template master*/
+        $data_esk_master = Model::checkTemplateMaster($data_ba->tipe,$data_ba->code_template,$databp[0],$data_ba->old_area,$data_ba->new_area,$data_ba->old_directorate);
         //var_dump($data_esk_master);exit;
-		if(!empty($data_esk_master)){
+        if(!empty($data_esk_master)){
             //default value
             $flag_gaji = 1;
             $flag_uang_pisah = null;
@@ -2923,13 +2924,13 @@ class BeritaAcaraController extends Controller
             || (strpos($content_sk,"{keputusan_direksi_1}") !== false && empty($keputusan_direksi_1) && empty($data_ba->keputusan_direksi_1))
             || (strpos($content_sk,"{keputusan_direksi_2}") !== false && empty($keputusan_direksi_2) && empty($data_ba->keputusan_direksi_2)) 
             || (strpos($content_sk,"{keputusan_direksi_3}") !== false && empty($keputusan_direksi_3) && empty($data_ba->keputusan_direksi_3))
-			|| (strpos($content_sk,"{gaji_dasar_bss}") !== false && empty($gaji_dasar_nss) && empty($data_ba->gaji_dasar_nss))
-			|| (strpos($content_sk,"{tbh_bss}") !== false && empty($tbh_nss) && empty($data_ba->tbh_nss))
-			|| (strpos($content_sk,"{tunjangan_rekomposisi_bss}") !== false && empty($tunjangan_rekomposisi_nss) && empty($data_ba->tunjangan_rekomposisi_nss))
-			|| (strpos($content_sk,"{tunjangan_jabatan_bss}") !== false && empty($tunjab_nss) && empty($data_ba->tunjab_nss))
-			|| (strpos($content_sk,"{kr_organisasi_bss}") !== false && empty($kr_bss) && empty($data_ba->kr_organisasi_bss))
-			|| (strpos($content_sk,"{tunjangan_hot_skill}") !== false && empty($tunjangan_hot_skill) && empty($data_ba->tunjangan_hot_skill))
-			|| (strpos($content_sk,"{new_nik}") !== false && empty($new_nik) && empty($data_ba->new_nik))
+            || (strpos($content_sk,"{gaji_dasar_bss}") !== false && empty($gaji_dasar_nss) && empty($data_ba->gaji_dasar_nss))
+            || (strpos($content_sk,"{tbh_bss}") !== false && empty($tbh_nss) && empty($data_ba->tbh_nss))
+            || (strpos($content_sk,"{tunjangan_rekomposisi_bss}") !== false && empty($tunjangan_rekomposisi_nss) && empty($data_ba->tunjangan_rekomposisi_nss))
+            || (strpos($content_sk,"{tunjangan_jabatan_bss}") !== false && empty($tunjab_nss) && empty($data_ba->tunjab_nss))
+            || (strpos($content_sk,"{kr_organisasi_bss}") !== false && empty($kr_bss) && empty($data_ba->kr_organisasi_bss))
+            || (strpos($content_sk,"{tunjangan_hot_skill}") !== false && empty($tunjangan_hot_skill) && empty($data_ba->tunjangan_hot_skill))
+            || (strpos($content_sk,"{new_nik}") !== false && empty($new_nik) && empty($data_ba->new_nik))
             ){
                 $flag_periode = strpos($content_sk,"{periode}") !== false ? '1' : '0';
                 $flag_nodin = strpos($content_sk,"{nota_dinas}") !== false ? '1' : '0';
@@ -2944,13 +2945,13 @@ class BeritaAcaraController extends Controller
                 $flag_kd_1 = strpos($content_sk,"{keputusan_direksi_1}") !== false ? '1' : '0';
                 $flag_kd_2 = strpos($content_sk,"{keputusan_direksi_2}") !== false ? '1' : '0';
                 $flag_kd_3 = strpos($content_sk,"{keputusan_direksi_3}") !== false ? '1' : '0'; 
-				$flag_gaji_dasar_nss = strpos($content_sk,"{gaji_dasar_bss}") !== false ? '1' : '0'; 
-				$flag_tbh_nss = strpos($content_sk,"{tbh_bss}") !== false ? '1' : '0'; 
-				$flag_tunjangan_rekomposisi_nss = strpos($content_sk,"{tunjangan_rekomposisi_bss}") !== false ? '1' : '0'; 
-				$flag_tunjab_nss = strpos($content_sk,"{tunjangan_jabatan_bss}") !== false ? '1' : '0'; 
-				$flag_tunjangan_hot_skill = strpos($content_sk,"{tunjangan_hot_skill}") !== false ? '1' : '0';
-				$flag_new_nik = strpos($content_sk,"{new_nik}") !== false ? '1' : '0';
-				
+                $flag_gaji_dasar_nss = strpos($content_sk,"{gaji_dasar_bss}") !== false ? '1' : '0'; 
+                $flag_tbh_nss = strpos($content_sk,"{tbh_bss}") !== false ? '1' : '0'; 
+                $flag_tunjangan_rekomposisi_nss = strpos($content_sk,"{tunjangan_rekomposisi_bss}") !== false ? '1' : '0'; 
+                $flag_tunjab_nss = strpos($content_sk,"{tunjangan_jabatan_bss}") !== false ? '1' : '0'; 
+                $flag_tunjangan_hot_skill = strpos($content_sk,"{tunjangan_hot_skill}") !== false ? '1' : '0';
+                $flag_new_nik = strpos($content_sk,"{new_nik}") !== false ? '1' : '0';
+                
                 $data_return = array(
                     "result" => "failed",
                     "remark" => "data BA ".$data_ba->nik."/".$data_ba->nama."/".$data_ba->tipe." failed because some addtional content (BA/KD/Periode/Nota Dinas/Diseases Name/Insentif Amount) is empty!"
@@ -2961,8 +2962,8 @@ class BeritaAcaraController extends Controller
             //$id_approval = EskApprovalMaster::find()->where(['band' => $databp[0], 'authority_area' => $data_esk_master['authority']])->andWhere('directorate like "%'.$data_ba->old_directorate.'%"')->one();
             $id_approval = EskApprovalMaster::find()->where(['band' => $databp[0]])->andWhere('authority_area like "%'.$data_esk_master['authority'].'%"')->andWhere('directorate like "%'.$data_ba->old_directorate.'%"')->one();
 
-			//var_dump($databp[0], $data_esk_master['authority'], $data_ba->old_directorate);exit;
-			if(!empty($id_approval)){
+            //var_dump($databp[0], $data_esk_master['authority'], $data_ba->old_directorate);exit;
+            if(!empty($id_approval)){
                 $data_return = array(
                     "result" => "success",
                     "remark" => ""
@@ -2974,7 +2975,7 @@ class BeritaAcaraController extends Controller
                 );
             }
         }else{
-			//var_dump($databp[0], $data_esk_master['authority'], $data_ba->old_directorate);exit;
+            //var_dump($databp[0], $data_esk_master['authority'], $data_ba->old_directorate);exit;
             $data_return = array(
                 "result" => "failed",
                 "remark" => "data BA ".$data_ba->nik."/".$data_ba->nama."/".$data_ba->tipe." template not found, please check again (type, code, band, old area and new area) or decree by"
@@ -2987,7 +2988,7 @@ class BeritaAcaraController extends Controller
     public function generateEsk($ba,$temp){
         //inisialisasi awal
         set_time_limit(0);
-		ini_set('memory_limit', '2048M');
+        ini_set('memory_limit', '2048M');
         $model = new EskListsTemp();
 
         if($temp == null){
@@ -3008,12 +3009,12 @@ class BeritaAcaraController extends Controller
         //explode data BP 
         $databp = explode(".",$data_ba->new_bp);                
         $dataoldbp = explode(".",$data_ba->old_bp);   
-		
-		if(is_null($databp[0]) == true || $databp[0] == "") {
-			$dataemployee = Employee::findOne(['nik' => $data_ba->nik]);
-			$databp = explode(".",$dataemployee->bp);
-		}
-		
+        
+        if(is_null($databp[0]) == true || $databp[0] == "") {
+            $dataemployee = Employee::findOne(['nik' => $data_ba->nik]);
+            $databp = explode(".",$dataemployee->bp);
+        }
+        
         //search tipe ba di template esk master
         $data_esk_master = Model::checkTemplateMaster($data_ba->tipe,$data_ba->code_template,$databp[0],$data_ba->old_area,$data_ba->new_area,$data_ba->old_directorate);
         if(!empty($data_esk_master)){
@@ -3032,27 +3033,27 @@ class BeritaAcaraController extends Controller
             //content id, nik, flag_kisel, last_payroll, flag_preview, flag_phk
             if($data_ba->positionNew->structural == "Y"){
                 $flag_tunjangan_jabatan = $salary['tunjangan_jabatan'];
-				$flag_tunjangan_jabatan = 1;
+                $flag_tunjangan_jabatan = 1;
                 $strukctural_data = $data_ba->positionNew->structural;
                 $functional_data = null;
             }elseif($data_ba->positionNew->functional == "Y"){
                 $flag_tunjangan_jabatan = $salary['tunjangan_fungsional'];
-				$flag_tunjangan_jabatan = 1;
+                $flag_tunjangan_jabatan = 1;
                 $strukctural_data = null;
                 $functional_data = $data_ba->positionNew->functional;
             }elseif(strpos($data_ba->new_title, 'Senior Staff') !== false || ($data_ba->band == 1 && $data_ba->level_band <= 1) || strpos($data_ba->new_title, 'Senior Advisor Associate') !== false || strpos($data_ba->new_title, 'Advisor Associate') !== false || strpos($data_ba->new_title, 'Telkomsel Next Gen Associate') !== false || strpos($data_ba->new_title, 'Senior Associate') !== false) { //sini buru
-				$flag_tunjangan_jabatan = 0;
-				$strukctural_data = null;
+                $flag_tunjangan_jabatan = 0;
+                $strukctural_data = null;
                 $functional_data = null;
-			}else{
+            }else{
                 if($data_ba->employee->structural == "Y"){
                     $flag_tunjangan_jabatan = $salary['tunjangan_jabatan'];
-					$flag_tunjangan_jabatan = 1;
+                    $flag_tunjangan_jabatan = 1;
                     $strukctural_data = $data_ba->employee->structural;
                     $functional_data = null;
                 }elseif($data_ba->employee->functional == "Y"){
                     $flag_tunjangan_jabatan = $salary['tunjangan_fungsional'];
-					$flag_tunjangan_jabatan = 1;
+                    $flag_tunjangan_jabatan = 1;
                     $strukctural_data = null;
                     $functional_data = $data_ba->employee->functional;
                 }else{
@@ -3061,26 +3062,26 @@ class BeritaAcaraController extends Controller
                     $functional_data = null;
                 }
             }
-			
-			//var_dump($data_ba->new_title);exit;
-			
-			/*
-			if(strpos($data_ba->new_title, 'Senior Staff') !== false || ($data_ba->band == 1 && $data_ba->level_band <= 1) || strpos($data_ba->new_title, 'Senior Advisor Associate') !== false || strpos($data_ba->new_title, 'Advisor Associate') !== false || strpos($data_ba->new_title, 'Telkomsel Next Gen Associate') !== false || strpos($data_ba->new_title, 'Senior Associate') !== false) { //sini buru
-				$flag_tunjangan_jabatan = 0;
-			} else {
-				$flag_tunjangan_jabatan = 1;
-			}
-			*/
-			
-			
-			
-			$flag_gaji_dasar_nss = 0;
-			if($data_ba->gaji_dasar_nss >= 0 && !empty($data_ba->gaji_dasar_nss)) {
-				$flag_gaji_dasar_nss = 1;
-			}
-			
+            
+            //var_dump($data_ba->new_title);exit;
+            
+            /*
+            if(strpos($data_ba->new_title, 'Senior Staff') !== false || ($data_ba->band == 1 && $data_ba->level_band <= 1) || strpos($data_ba->new_title, 'Senior Advisor Associate') !== false || strpos($data_ba->new_title, 'Advisor Associate') !== false || strpos($data_ba->new_title, 'Telkomsel Next Gen Associate') !== false || strpos($data_ba->new_title, 'Senior Associate') !== false) { //sini buru
+                $flag_tunjangan_jabatan = 0;
+            } else {
+                $flag_tunjangan_jabatan = 1;
+            }
+            */
+            
+            
+            
+            $flag_gaji_dasar_nss = 0;
+            if($data_ba->gaji_dasar_nss >= 0 && !empty($data_ba->gaji_dasar_nss)) {
+                $flag_gaji_dasar_nss = 1;
+            }
+            
 
-			//var_dump($flag_tunjangan_jabatan, $data_ba->new_title);exit;
+            //var_dump($flag_tunjangan_jabatan, $data_ba->new_title);exit;
             $content_sk = Model::generateEsk($data_esk_master['id'],$data_ba->nik,$data_ba->flag_kisel,$data_ba->last_payroll,"",$flag_gaji, $flag_uang_pisah, $flag_ganti_rumah, $flag_ganti_cuti, $flag_homebase, $flag_insentif, $flag_ket_kerja, null, $flag_tunjangan_jabatan);
             //check apakah content ada code periode atau nodin 
             if( (strpos($content_sk,"{periode}") !== false && empty($periode) && empty($data_ba->periode)) 
@@ -3096,8 +3097,8 @@ class BeritaAcaraController extends Controller
             || (strpos($content_sk,"{keputusan_direksi_1}") !== false && empty($keputusan_direksi_1) && empty($data_ba->keputusan_direksi_1))
             || (strpos($content_sk,"{keputusan_direksi_2}") !== false && empty($keputusan_direksi_2) && empty($data_ba->keputusan_direksi_2)) 
             || (strpos($content_sk,"{keputusan_direksi_3}") !== false && empty($keputusan_direksi_3) && empty($data_ba->keputusan_direksi_3))
-			|| (strpos($content_sk,"{tunjangan_hot_skill}") !== false && empty($tunjangan_hot_skill) && empty($data_ba->tunjangan_hot_skill))
-			|| (strpos($content_sk,"{new_nik}") !== false && empty($new_nik) && empty($data_ba->new_nik))
+            || (strpos($content_sk,"{tunjangan_hot_skill}") !== false && empty($tunjangan_hot_skill) && empty($data_ba->tunjangan_hot_skill))
+            || (strpos($content_sk,"{new_nik}") !== false && empty($new_nik) && empty($data_ba->new_nik))
             ){
                 $flag_periode = strpos($content_sk,"{periode}") !== false ? '1' : '0';
                 $flag_nodin = strpos($content_sk,"{nota_dinas}") !== false ? '1' : '0';
@@ -3112,9 +3113,9 @@ class BeritaAcaraController extends Controller
                 $flag_kd_1 = strpos($content_sk,"{keputusan_direksi_1}") !== false ? '1' : '0';
                 $flag_kd_2 = strpos($content_sk,"{keputusan_direksi_2}") !== false ? '1' : '0';
                 $flag_kd_3 = strpos($content_sk,"{keputusan_direksi_3}") !== false ? '1' : '0';
-				$flag_tunjangan_hot_skill = strpos($content_sk,"{tunjangan_hot_skill}") !== false ? '1' : '0';
-				$flag_new_nik = strpos($content_sk,"{new_nik}") !== false ? '1' : '0';
-				
+                $flag_tunjangan_hot_skill = strpos($content_sk,"{tunjangan_hot_skill}") !== false ? '1' : '0';
+                $flag_new_nik = strpos($content_sk,"{new_nik}") !== false ? '1' : '0';
+                
                 $data_return = array(
                     "result" => "failed",
                     "remark" => "data BA ".$data_ba->nik."/".$data_ba->nama."/".$data_ba->tipe." failed because some addtional content (BA/KD/Periode/Nota Dinas/Diseases Name/Insentif Amount) is empty!"
@@ -3303,9 +3304,9 @@ class BeritaAcaraController extends Controller
             }
             $model->flag_ack_seq = 1;
             
-			//set  atasan
-			// $model->atasan_created = Yii::$app->user->identity->employee->nik_atasan;
-			
+            //set  atasan
+            // $model->atasan_created = Yii::$app->user->identity->employee->nik_atasan;
+            
             if($model->save()){
                 //logging data
                 Model::saveLog(Yii::$app->user->identity->username, "Generate eSK with ID ".$model->id);
@@ -3335,7 +3336,7 @@ class BeritaAcaraController extends Controller
     public function regenerateEsk($ba,$temp){
         //inisialisasi awal
         set_time_limit(0);
-		ini_set('memory_limit', '2048M');
+        ini_set('memory_limit', '2048M');
         $model = EskListsTemp::find()->where(['id_ba_detail' => $ba])->one();
 
         if($temp == null){
@@ -3356,12 +3357,12 @@ class BeritaAcaraController extends Controller
         //explode data BP 
         $databp = explode(".",$data_ba->new_bp);                
         $dataoldbp = explode(".",$data_ba->old_bp);   
-		
-		if(is_null($databp[0]) == true || $databp[0] == "") {
-			$dataemployee = Employee::findOne(['nik' => $data_ba->nik]);
-			$databp = explode(".",$dataemployee->bp);    
-		}
-		
+        
+        if(is_null($databp[0]) == true || $databp[0] == "") {
+            $dataemployee = Employee::findOne(['nik' => $data_ba->nik]);
+            $databp = explode(".",$dataemployee->bp);    
+        }
+        
         //search tipe ba di template esk master
         $data_esk_master = Model::checkTemplateMaster($data_ba->tipe,$data_ba->code_template,$databp[0],$data_ba->old_area,$data_ba->new_area,$data_ba->old_directorate);
         if(!empty($data_esk_master)){
@@ -3401,8 +3402,8 @@ class BeritaAcaraController extends Controller
                     $functional_data = null;
                 }
             }
-			
-			
+            
+            
             $content_sk = Model::generateEsk($data_esk_master['id'],$data_ba->nik,$data_ba->flag_kisel,$data_ba->last_payroll,"",$flag_gaji, $flag_uang_pisah, $flag_ganti_rumah, $flag_ganti_cuti, $flag_homebase, $flag_insentif, $flag_ket_kerja, null, $flag_tunjangan_jabatan);
             //validasi effective date dan flag backdate             
             $today = date("Y-m-d");
@@ -3564,7 +3565,7 @@ class BeritaAcaraController extends Controller
             $model->keputusan_direksi_3 = (empty($data_ba->keputusan_direksi_3)) ? $keputusan_direksi_3 : $data_ba->keputusan_direksi_3;
             $model->alamat = (!empty($emp_ba)) ? $emp_ba->alamat : "";
 
-			if($model->save()){
+            if($model->save()){
                 //logging data
                 Model::saveLog(Yii::$app->user->identity->username, "Regenerate eSK with ID ".$model->id);
 
@@ -3764,9 +3765,9 @@ class BeritaAcaraController extends Controller
             $count = EskBeritaAcaraDetailOther::find()->where(['id_master' => $batch_number,'nik' => $nik])->count();
             $model = new EskBeritaAcaraDetailOther();
             $model->id_master = $batch_number;
-			
-			$position = Position::find()->where(['id' => $position_id])->one();
-			
+            
+            $position = Position::find()->where(['id' => $position_id])->one();
+            
         }
 
         //get data employee 
@@ -3847,10 +3848,10 @@ class BeritaAcaraController extends Controller
 
         //cek structural data 
         if($count <= 0){
-			if (strpos($tipe, 'Promosi') !== false && $position->structural == "Y" && $position->band >= 2) {
-				$position_baru = 'Pj. ' . $position_baru;
-			} 
-							
+            if (strpos($tipe, 'Promosi') !== false && $position->structural == "Y" && $position->band >= 2) {
+                $position_baru = 'Pj. ' . $position_baru;
+            } 
+                            
             $model->person_id = $employee->person_id;
             $model->nik = $nik;
             $model->nama = $employee->nama;
@@ -3946,8 +3947,8 @@ class BeritaAcaraController extends Controller
 
              // perubahan approval mpp dan sakit berkepanjangan - 12092024 -ejes
              if (strpos(strtolower($model->tipe), "sakit berkepanjangan") !== false || strpos(strtolower($model->tipe), "mpp") !== false) {
-                $model->flag_ba_manager 	= 1;
-                $model->nik_approved_ba 	= '86149'; // approval pertama ke mas arnold
+                $model->flag_ba_manager     = 1;
+                $model->nik_approved_ba     = '86149'; // approval pertama ke mas arnold
            
              }else{  
                 if($model->level_band <= 3) {
@@ -4133,59 +4134,59 @@ class BeritaAcaraController extends Controller
         $data_jarak = EskJarak::find()->where(['kota_asal' => ucwords(strtolower($data_employee->kota)), 'kota_tujuan' => ucwords(strtolower($kota_baru)) ])->one();
 
         $band_emp = explode(".",$data_employee->bp);
-		$band_pos = explode(".",$data_position->bp);
+        $band_pos = explode(".",$data_position->bp);
 
-		//check apakah demosi
-		if($data_employee->band > $data_position->band){
-			$data = array(
-				"result" => 0,
-				"code_template" => "",
-				"result_cat" => "",
-				"remark" => "Please check again recommended position because employee will be demotion if choose it.",
-			);
-		}else{
-			//check result category
-			if($data_employee->band == $data_position->band && $data_employee->position_id == $data_position->id){
-				$result_cat = 3;
-				$code_bp = "ROT";
-				$dpe = "";
-			}elseif($data_employee->band == $data_position->band){
-				$result_cat = 1;
-				$code_bp = "ROT";
-				$dpe = "";
-			}else{
-				$result_cat = 2;
-				$code_bp = "PRO";
-				$dpe = (empty($data_employee->dpe)) ? 0 : 1;
-			}
+        //check apakah demosi
+        if($data_employee->band > $data_position->band){
+            $data = array(
+                "result" => 0,
+                "code_template" => "",
+                "result_cat" => "",
+                "remark" => "Please check again recommended position because employee will be demotion if choose it.",
+            );
+        }else{
+            //check result category
+            if($data_employee->band == $data_position->band && $data_employee->position_id == $data_position->id){
+                $result_cat = 3;
+                $code_bp = "ROT";
+                $dpe = "";
+            }elseif($data_employee->band == $data_position->band){
+                $result_cat = 1;
+                $code_bp = "ROT";
+                $dpe = "";
+            }else{
+                $result_cat = 2;
+                $code_bp = "PRO";
+                $dpe = (empty($data_employee->dpe)) ? 0 : 1;
+            }
 
-			//check jarak
-			if(!empty($data_jarak)){
-				$jarak = 0;
-			}elseif($data_jarak->jarak == 0){
-				$jarak = 0;
-			}elseif($data_jarak->jarak <= 100){
-				$jarak = 1;
-			}else{
-				$jarak = 2;
-			}
+            //check jarak
+            if(!empty($data_jarak)){
+                $jarak = 0;
+            }elseif($data_jarak->jarak == 0){
+                $jarak = 0;
+            }elseif($data_jarak->jarak <= 100){
+                $jarak = 1;
+            }else{
+                $jarak = 2;
+            }
 
-			//check grade
-			$bp_emp = empty($band_emp[1]) ? $band_emp[0] : $band_emp[1];
-			$bp_pos = empty($band_pos[1]) ? $band_pos[0] : $band_pos[1];
-			if($bp_emp == $bp_pos){
-				$grade = 0;
-			}else{
-				$grade = 1;
-			}
+            //check grade
+            $bp_emp = empty($band_emp[1]) ? $band_emp[0] : $band_emp[1];
+            $bp_pos = empty($band_pos[1]) ? $band_pos[0] : $band_pos[1];
+            if($bp_emp == $bp_pos){
+                $grade = 0;
+            }else{
+                $grade = 1;
+            }
 
-			$data = array(
-				"result" => 1,
-				"code_template" => $code_bp."".$jarak."".$grade."".$dpe,
-				"result_cat" => $result_cat,
-				"remark" => "Success",
-			);
-		}
+            $data = array(
+                "result" => 1,
+                "code_template" => $code_bp."".$jarak."".$grade."".$dpe,
+                "result_cat" => $result_cat,
+                "remark" => "Success",
+            );
+        }
 
         return json_encode($data);
     }
