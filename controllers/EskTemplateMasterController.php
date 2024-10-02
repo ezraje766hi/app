@@ -103,7 +103,7 @@ class EskTemplateMasterController extends Controller
         
         //content id, nik, flag_kisel, last_payroll, flag_preview, flag_phk
         //$content_sk = Model::generateEsk($id,"","1","","1");
-		$content_sk = Model::generateEsk($id,"","1","","1","","","","","","","","",1);
+        $content_sk = Model::generateEsk($id,"","1","","1","","","","","","","","",1);
         $esk_no = "00/TEMPLATE-SK.00".$flag_interim."/HC-00/" . Model::getMonthYear(date("m"),date("Y")); 
         $all_content = Model::setEskData($model->id,$model->about,$esk_no,$content_sk,"Jakarta Selatan","Nama Karyawan","000000","Jabatan Karyawan","1","Direktur Human Capital Management",date("Y-m-d"),"-","preview");
 
@@ -137,87 +137,96 @@ class EskTemplateMasterController extends Controller
             Model::loadMultiple($details, Yii::$app->request->post());
             Model::loadMultiple($authorities, Yii::$app->request->post());
             // Model::loadMultiple($reason, Yii::$app->request->post());
-            
-            // assign default transaction_id
-            foreach ($details as $detail) {
-                $detail->id_esk_master = 0;
-            }
-            
-            foreach ($authorities as $authority) {
-                $authority->id_esk_master = 0;
-            }
-            // var_dump(Yii::$app->request->post());
-            // die('disini');
-            // ajax validation
-            if (Yii::$app->request->isAjax) {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return ArrayHelper::merge(
-                    ActiveForm::validateMultiple($details),
-                    ActiveForm::validateMultiple($authorities),
-                    ActiveForm::validate($model),
-                    ActiveForm::validate($reason)
-                );
-            }
-            
-            // validate all models
-            $valid1 = $model->validate();
-            $valid2 = Model::validateMultiple($details);
-            $valid3 = Model::validateMultiple($authorities);
-            $valid = $valid1 && $valid2 && $valid3;
+            // added ejes 011024, check for duplicate code template
+            $cekcodetemplate = EskTemplateMaster::find()->where(['code_template' => trim(ucwords($model->code_template))])->one();
+            if(empty($cekcodetemplate)){
+                     
 
-            // jika valid, mulai proses penyimpanan
-            if ($valid) {
-                // mulai database transaction
-                $transaction = \Yii::$app->db->beginTransaction();
-            // var_dump($transaction);
-            // die('disini');
-                try {
-                    // simpan master record                   
-                    if ($flag = $model->save(false)) {
-                        // kemudian simpan detail records
-                        foreach ($details as $detail) {
-                            $detail->id_esk_master = $model->id;
-                            if (! ($flag = $detail->save(false))) {
-                                $transaction->rollBack();
-                                break;
-                            }
-                        }
-
-                        foreach ($authorities as $authority) {
-                            $authority->id_esk_master = $model->id;
-                            if (! ($flag = $authority->save(false))) {
-                                $transaction->rollBack();
-                                break;
-                            }
-                        }
-                    }
-
-                    if ($flag) {
-                        // sukses, commit database transaction
-                        // kemudian tampilkan hasilnya
-                        $transaction->commit();
-                        //logging data
-                        Model::saveLog(Yii::$app->user->identity->username, "Create a new eSK Template with ID ".$model->id);
-                
-                        Yii::$app->session->setFlash('success', "Your esk template successfully created.");
-                        return $this->redirect(['esk-template-master/index']); 
-                    } else {
-                        Yii::$app->session->setFlash('error', "Your esk template was not saved.");
-                        return $this->redirect(['esk-template-master/index']); 
-                    }
-                } catch (Exception $e) {
-                    // penyimpanan gagal, rollback database transaction
-                    $transaction->rollBack();
-                    throw $e;
+                // assign default transaction_id
+                foreach ($details as $detail) {
+                    $detail->id_esk_master = 0;
                 }
+                
+                foreach ($authorities as $authority) {
+                    $authority->id_esk_master = 0;
+                }
+                // var_dump(Yii::$app->request->post());
+                // die('disini');
+                // ajax validation
+                if (Yii::$app->request->isAjax) {
+                    Yii::$app->response->format = Response::FORMAT_JSON;
+                    return ArrayHelper::merge(
+                        ActiveForm::validateMultiple($details),
+                        ActiveForm::validateMultiple($authorities),
+                        ActiveForm::validate($model),
+                        ActiveForm::validate($reason)
+                    );
+                }
+            
+                // validate all models
+                $valid1 = $model->validate();
+                $valid2 = Model::validateMultiple($details);
+                $valid3 = Model::validateMultiple($authorities);
+                $valid = $valid1 && $valid2 && $valid3;
+
+                // jika valid, mulai proses penyimpanan
+                if ($valid) {
+                    // mulai database transaction
+                    $transaction = \Yii::$app->db->beginTransaction();
+                // var_dump($transaction);
+                // die('disini');
+                    try {
+                        // simpan master record                   
+                        if ($flag = $model->save(false)) {
+                            // kemudian simpan detail records
+                            foreach ($details as $detail) {
+                                $detail->id_esk_master = $model->id;
+                                if (! ($flag = $detail->save(false))) {
+                                    $transaction->rollBack();
+                                    break;
+                                }
+                            }
+
+                            foreach ($authorities as $authority) {
+                                $authority->id_esk_master = $model->id;
+                                if (! ($flag = $authority->save(false))) {
+                                    $transaction->rollBack();
+                                    break;
+                                }
+                            }
+                        }
+
+                        if ($flag) {
+                            // sukses, commit database transaction
+                            // kemudian tampilkan hasilnya
+                            $transaction->commit();
+                            //logging data
+                            Model::saveLog(Yii::$app->user->identity->username, "Create a new eSK Template with ID ".$model->id);
+                    
+                            Yii::$app->session->setFlash('success', "Your esk template successfully created.");
+                            return $this->redirect(['esk-template-master/index']); 
+                        } else {
+                            Yii::$app->session->setFlash('error', "Your esk template was not saved.");
+                            return $this->redirect(['esk-template-master/index']); 
+                        }
+                    } catch (Exception $e) {
+                        // penyimpanan gagal, rollback database transaction
+                        $transaction->rollBack();
+                        throw $e;
+                    }
+                } else {
+                    return $this->render('create', [
+                        'model' => $model,
+                        'details' => $details,
+                        'authorities' => $authorities,
+                        'reason' => $reason,
+                        'error' => 'valid1: '.print_r($valid1,true).' - valid2: '.print_r($valid2,true).' - valid3: '.print_r($valid3,true),
+                    ]);
+                }
+            //added ejes 011024    
             } else {
-                return $this->render('create', [
-                    'model' => $model,
-                    'details' => $details,
-                    'authorities' => $authorities,
-                    'reason' => $reason,
-                    'error' => 'valid1: '.print_r($valid1,true).' - valid2: '.print_r($valid2,true).' - valid3: '.print_r($valid3,true),
-                ]);
+                Yii::$app->session->setFlash('error', "Your template code already exist.");
+                return $this->redirect(['esk-template-master/index']); 
             }
         }else{
             // die('disitu');
@@ -249,81 +258,89 @@ class EskTemplateMasterController extends Controller
             Model::loadMultiple($details, Yii::$app->request->post());
             Model::loadMultiple($authorities, Yii::$app->request->post());
 
-            // assign default transaction_id
-            foreach ($details as $detail) {
-                $detail->id_esk_master = 0;
-            }
-            
-            foreach ($authorities as $authority) {
-                $authority->id_esk_master = 0;
-            }
-
-            // ajax validation
-            if (Yii::$app->request->isAjax) {
-                Yii::$app->response->format = Response::FORMAT_JSON;
-                return ArrayHelper::merge(
-                    ActiveForm::validateMultiple($details),
-                    ActiveForm::validateMultiple($authorities),
-                    ActiveForm::validate($model)
-                );
-            }
-
-            // validate all models
-            $valid1 = $model->validate();
-            $valid2 = Model::validateMultiple($details);
-            $valid3 = Model::validateMultiple($authorities);
-            $valid = $valid1 && $valid2 && $valid3;
-
-            // jika valid, mulai proses penyimpanan
-            if ($valid) {
-                // mulai database transaction
-                $transaction = \Yii::$app->db->beginTransaction();
-                try {
-                    // simpan master record                   
-                    if ($flag = $model->save(false)) {
-                        // kemudian simpan detail records
-                        foreach ($details as $detail) {
-                            $detail->id_esk_master = $model->id;
-                            if (! ($flag = $detail->save(false))) {
-                                $transaction->rollBack();
-                                break;
-                            }
-                        }
-
-                        foreach ($authorities as $authority) {
-                            $authority->id_esk_master = $model->id;
-                            if (! ($flag = $authority->save(false))) {
-                                $transaction->rollBack();
-                                break;
-                            }
-                        }
-                    }
-
-                    if ($flag) {
-                        // sukses, commit database transaction
-                        // kemudian tampilkan hasilnya
-                        $transaction->commit();
-                        //logging data
-                        Model::saveLog(Yii::$app->user->identity->username, "Create a new eSK Template with ID ".$model->id);
-                
-                        Yii::$app->session->setFlash('success', "Your esk template successfully created.");
-                        return $this->redirect(['esk-template-master/index']); 
-                    } else {
-                        Yii::$app->session->setFlash('error', "Your esk template was not saved.");
-                        return $this->redirect(['esk-template-master/index']); 
-                    }
-                } catch (Exception $e) {
-                    // penyimpanan gagal, rollback database transaction
-                    $transaction->rollBack();
-                    throw $e;
+            // added ejes 011024, check for duplicate code template
+            $cekcodetemplate = EskTemplateMaster::find()->where(['code_template' => trim(ucwords($model->code_template))])->one();
+            if(empty($cekcodetemplate)){
+                     
+                // assign default transaction_id
+                foreach ($details as $detail) {
+                    $detail->id_esk_master = 0;
                 }
+                
+                foreach ($authorities as $authority) {
+                    $authority->id_esk_master = 0;
+                }
+
+                // ajax validation
+                if (Yii::$app->request->isAjax) {
+                    Yii::$app->response->format = Response::FORMAT_JSON;
+                    return ArrayHelper::merge(
+                        ActiveForm::validateMultiple($details),
+                        ActiveForm::validateMultiple($authorities),
+                        ActiveForm::validate($model)
+                    );
+                }
+
+                // validate all models
+                $valid1 = $model->validate();
+                $valid2 = Model::validateMultiple($details);
+                $valid3 = Model::validateMultiple($authorities);
+                $valid = $valid1 && $valid2 && $valid3;
+
+                // jika valid, mulai proses penyimpanan
+                if ($valid) {
+                    // mulai database transaction
+                    $transaction = \Yii::$app->db->beginTransaction();
+                    try {
+                        // simpan master record                   
+                        if ($flag = $model->save(false)) {
+                            // kemudian simpan detail records
+                            foreach ($details as $detail) {
+                                $detail->id_esk_master = $model->id;
+                                if (! ($flag = $detail->save(false))) {
+                                    $transaction->rollBack();
+                                    break;
+                                }
+                            }
+
+                            foreach ($authorities as $authority) {
+                                $authority->id_esk_master = $model->id;
+                                if (! ($flag = $authority->save(false))) {
+                                    $transaction->rollBack();
+                                    break;
+                                }
+                            }
+                        }
+
+                        if ($flag) {
+                            // sukses, commit database transaction
+                            // kemudian tampilkan hasilnya
+                            $transaction->commit();
+                            //logging data
+                            Model::saveLog(Yii::$app->user->identity->username, "Create a new eSK Template with ID ".$model->id);
+                    
+                            Yii::$app->session->setFlash('success', "Your esk template successfully created.");
+                            return $this->redirect(['esk-template-master/index']); 
+                        } else {
+                            Yii::$app->session->setFlash('error', "Your esk template was not saved.");
+                            return $this->redirect(['esk-template-master/index']); 
+                        }
+                    } catch (Exception $e) {
+                        // penyimpanan gagal, rollback database transaction
+                        $transaction->rollBack();
+                        throw $e;
+                    }                 
+                } else {
+                    return $this->render('create', [
+                        'model' => $model,
+                        'details' => $details,
+                        'authorities' => $authorities,
+                        'error' => 'valid1: '.print_r($valid1,true).' - valid2: '.print_r($valid2,true).' - valid3: '.print_r($valid3,true),
+                    ]);
+                }//added ejes 011024    
             } else {
-                return $this->render('create', [
-                    'model' => $model,
-                    'details' => $details,
-                    'authorities' => $authorities,
-                    'error' => 'valid1: '.print_r($valid1,true).' - valid2: '.print_r($valid2,true).' - valid3: '.print_r($valid3,true),
-                ]);
+                Yii::$app->session->setFlash('error', "Your template code already exist.");
+                return $this->redirect(['esk-template-master/index']); 
             }
         }else{
             // inisialisai id 
@@ -665,8 +682,8 @@ class EskTemplateMasterController extends Controller
         $esk_master = EskTemplateMaster::find()->where(['code_template' => $code])->one();
         //content id, nik, flag_kisel, last_payroll, flag_preview, flag_phk
         //$content_sk = Model::generateEsk($esk_master->id,"","1","","1");
-		  $content_sk = Model::generateEsk($esk_master->id,"","1","","1","","","","","","","","",1);
-		  
+          $content_sk = Model::generateEsk($esk_master->id,"","1","","1","","","","","","","","",1);
+          
         //cek code
         $flag_nama_penyakit = (strpos($content_sk, "{nama_penyakit}") !== false) ? 1 : 0;
         $flag_nominal_insentif = (strpos($content_sk, "{nominal_insentif}") !== false) ? 1 : 0;
@@ -689,11 +706,11 @@ class EskTemplateMasterController extends Controller
         $flag_last_payroll = (strpos($content_sk, "{last_payroll}") !== false) ? 1 : 0;
         $flag_resign_date = (strpos($content_sk, "{resign_date}") !== false) ? 1 : 0;
         $flag_kisel = (strpos($esk_master->type,"PHK") !== false) ? 1 : 0;
-		$flag_gaji_dasar_nss = strpos($content_sk,"{gaji_dasar_nss}") !== false ? '1' : '0'; 
-		$flag_tbh_nss = strpos($content_sk,"{tbh_nss}") !== false ? '1' : '0'; 
-		$flag_tunjangan_rekomposisi_nss = strpos($content_sk,"{tunjangan_rekomposisi_nss}") !== false ? '1' : '0'; 
-		$flag_tunjab_nss = strpos($content_sk,"{tunjab_nss}") !== false ? '1' : '0'; 
-				
+        $flag_gaji_dasar_nss = strpos($content_sk,"{gaji_dasar_nss}") !== false ? '1' : '0'; 
+        $flag_tbh_nss = strpos($content_sk,"{tbh_nss}") !== false ? '1' : '0'; 
+        $flag_tunjangan_rekomposisi_nss = strpos($content_sk,"{tunjangan_rekomposisi_nss}") !== false ? '1' : '0'; 
+        $flag_tunjab_nss = strpos($content_sk,"{tunjab_nss}") !== false ? '1' : '0'; 
+                
         $data = array(
             'flag_nama_penyakit' => $flag_nama_penyakit,
             'flag_nominal_insentif' => $flag_nominal_insentif,
@@ -716,10 +733,10 @@ class EskTemplateMasterController extends Controller
             'flag_last_payroll' => $flag_last_payroll,
             'flag_resign_date' => $flag_resign_date,
             'flag_kisel' => $flag_kisel,
-			'flag_gaji_dasar_nss' => $flag_gaji_dasar_nss,
-			'flag_tbh_nss' => $flag_tbh_nss,
-			'flag_tunjangan_rekomposisi_nss' => $flag_tunjangan_rekomposisi_nss ,
-			'flag_tunjab_nss' => $flag_tunjangan_rekomposisi_nss,
+            'flag_gaji_dasar_nss' => $flag_gaji_dasar_nss,
+            'flag_tbh_nss' => $flag_tbh_nss,
+            'flag_tunjangan_rekomposisi_nss' => $flag_tunjangan_rekomposisi_nss ,
+            'flag_tunjab_nss' => $flag_tunjangan_rekomposisi_nss,
         );
 
         return json_encode($data);
