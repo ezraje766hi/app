@@ -749,6 +749,7 @@ class BeritaAcaraController extends Controller
                                 // perubahan approval mpp dan sakit berkepanjangan (all band) - 12092024 -ejes
                                 // >> if($esk_lists->level_band == 4 && (strpos(strtolower($esk_lists->tipe), "pejabat sementara") !== false || strpos(strtolower($esk_lists->tipe), "mutasi aps") !== false || strpos(strtolower($esk_lists->tipe), "sakit berkepanjangan") !== false || strpos(strtolower($model->tipe), "mpp") !== false && $model->level_band <= 4)) {
                                 // >>>> 02092024 if($esk_lists->level_band == 4 && (strpos(strtolower($esk_lists->tipe), "pejabat sementara") !== false || strpos(strtolower($esk_lists->tipe), "mutasi aps") !== false )) { 
+                                /*EJES 021024*/
                                 if(
                                     ( $esk_lists->level_band == 4 && 
                                         (strpos(strtolower($esk_lists->tipe), "pejabat sementara") !== FALSE || strpos(strtolower($esk_lists->tipe), "mutasi aps") !== FALSE )) 
