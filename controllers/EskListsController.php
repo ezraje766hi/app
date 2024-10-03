@@ -3113,6 +3113,7 @@ class EskListsController extends Controller
         exit;
     }
 
+    /*EJES 021024*/
     public function exportDataTypeTwo($model){
 
         $spreadsheet = new Spreadsheet();
