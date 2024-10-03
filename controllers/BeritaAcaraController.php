@@ -926,11 +926,7 @@ class BeritaAcaraController extends Controller
                         $data_approval = EskApprovalDetail::find()->where(['id_approval_master' => $id_approval->id])->all();
                         // bug fixing approval mpp - 12092024 -ejes
                         // >> if($esk_lists->level_band == 4 && (strpos(strtolower($esk_lists->tipe), "pejabat sementara") !== false || strpos(strtolower($esk_lists->tipe), "mutasi aps") !== false || strpos(strtolower($esk_lists->tipe), "sakit berkepanjangan") !== false || strpos(strtolower($model->tipe), "mpp") !== false && $model->level_band <= 4)) {
-<<<<<<< HEAD
-                        if( ( $esk_lists->level_band == 4 && (strpos(strtolower($esk_lists->tipe), "pejabat sementara") !== false 
-=======
                         if( ( $esk_lists->level_band <= 4 && (strpos(strtolower($esk_lists->tipe), "pejabat sementara") !== false 
->>>>>>> 9255358999cc220fb53fe73bd32a14f83487eac4
                             || strpos(strtolower($esk_lists->tipe), "mutasi aps") !== false ) ) 
                             ||  ( strpos(strtolower($esk_lists->tipe), "sakit berkepanjangan") !== FALSE || strpos(strtolower($esk_lists->tipe), "mpp") !== FALSE)
                             )
