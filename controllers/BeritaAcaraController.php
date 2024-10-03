@@ -1027,6 +1027,15 @@ class BeritaAcaraController extends Controller
             "id" => $id 
         ]);
     }
+
+    // ejesdemo 03102024 -- dua
+    public function actionModalverification(){
+        $id = yii::$app->request->get('id');
+
+        return $this->renderAjax('app_dialog_verification',[
+            "id" => $id
+        ]);
+    }    
     
     public function actionRejectedall(){
         $id_app_data = yii::$app->request->get('id_app_rejected');
